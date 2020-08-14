@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: ENC()
+    password: ENC()
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+
+# 加密参数
+jasypt:
+  encryptor:
+    password: springboot-mail
