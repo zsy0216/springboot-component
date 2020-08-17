@@ -5,8 +5,8 @@ spring:
   mail:
     host: smtp.qq.com
     port: 465
-    username: ENC()
-    password: ENC()
+    username: ENC(hhSOllGOQ9sYBssjrYmyIKxdEJQ7rx5DAtM1/78yiZo=)
+    password: ENC(1lkmIGVenzpxFs/i867yO8kTUZ8GTbKyAa7espWABko=)
     protocol: smtp
     properties:
       mail:
