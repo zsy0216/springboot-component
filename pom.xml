@@ -10,6 +10,7 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>springboot-mail</module>
+        <module>springboot-poi</module>
     </modules>
 
     <!-- 统一管理jar包版本 -->
