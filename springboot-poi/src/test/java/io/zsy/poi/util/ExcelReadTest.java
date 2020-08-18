@@ -1,5 +1,6 @@
 package io.zsy.poi.util;
 
+import io.zsy.poi.service.ReadService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -8,6 +9,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 
 /**
@@ -18,14 +20,14 @@ import java.io.IOException;
 @SpringBootTest
 public class ExcelReadTest {
 
+	@Resource
+	ReadService readService;
+
+	String path = "C:\\Users\\59498\\Desktop\\list.xlsx";
+
 	@Test
 	public void readCell() throws IOException {
-		Workbook workbook = new XSSFWorkbook("C:\\Users\\59498\\Desktop\\list.xlsx");
-		Sheet sheet = workbook.getSheetAt(2);
-		Row row = sheet.getRow(1);
-		Cell cell = row.getCell(0);
-		Object value = ExcelUtils.getValue(cell);
-		System.out.println(value.toString());
+		System.out.println(readService.readCell(path, 2, 1, 0));
 	}
 
 	/**
@@ -64,8 +66,9 @@ public class ExcelReadTest {
 		String sql = "insert into i18n_info(language_type, source_value, i18n_value, create_by, update_by) values('" + lang + "', '" + code + "', '" + i18n + "', 'System', 'System');";
 		return sql;
 	}
+
 	@Test
-	public void I18N() throws IOException{
+	public void I18N() throws IOException {
 		String language;
 		Workbook workbook = new XSSFWorkbook("C:\\Users\\59498\\Desktop\\list.xlsx");
 		Sheet sheet = workbook.getSheetAt(2);
@@ -81,7 +84,7 @@ public class ExcelReadTest {
 					String i18n_zh = ExcelUtils.getValue(cell).toString();
 					System.out.println(generateSql(language, code, i18n_zh));
 				}
-				if (j ==2){
+				if (j == 2) {
 					language = "en";
 					String i18n_en = ExcelUtils.getValue(cell).toString();
 					System.out.println(generateSql(language, code, i18n_en));
