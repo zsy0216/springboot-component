@@ -11,6 +11,7 @@
     <modules>
         <module>springboot-mail</module>
         <module>springboot-poi</module>
+        <module>springboot-springbatch</module>
     </modules>
 
     <!-- 统一管理jar包版本 -->
@@ -18,6 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <mysql.version>5.1.47</mysql.version>
         <junit.version>4.12</junit.version>
         <log4j.version>1.2.17</log4j.version>
         <lombok.version>1.18.10</lombok.version>
@@ -27,13 +29,21 @@
     <!-- 子模块继承之后，提供作用：锁定版本 + 子模块不用再写 version  -->
     <dependencyManagement>
         <dependencies>
-            <!-- spring boot 2.2.2-->
+            <!-- spring boot -->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-dependencies</artifactId>
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <!-- database relative -->
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <scope>runtime</scope>
+                <version>${mysql.version}</version>
             </dependency>
 
             <!-- devtools -->
@@ -75,7 +85,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>2.2.2.RELEASE</version>
+                <version>${spring.boot.version}</version>
                 <configuration>
                     <fork>true</fork>
                     <addResources>true</addResources>

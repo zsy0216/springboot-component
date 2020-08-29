@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/boot_batch?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      maximum-pool-size: 15
+      minimum-idle: 5
+      idle-timeout: 30000
+    # 项目启动时创建数据表（用于记录批处理执行状态）的 SQL 脚本，该脚本由Spring Batch提供
+    schema: classpath:/org/springframework/batch/core/schema-mysql.sql
+  batch:
+    initialize-schema: always  # 项目启动时执行建表 SQL
+    job:
+      # 默认情况下，项目启动时就会自动执行配置好的批处理操作。这里将其设为不自动执行，后面我们通过手动触发执行批处理
+      enabled: false
