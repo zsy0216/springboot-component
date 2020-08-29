@@ -23,7 +23,7 @@ public class Csv2DataBaseJobTest {
 	JobLauncher jobLauncher;
 
 	@Resource
-	Job job;
+	Job csv2DatabaseJobWithProcess;
 
 	@Resource
 	DataSource dataSource;
@@ -33,7 +33,7 @@ public class Csv2DataBaseJobTest {
 		try {
 			JobParameters jobParameters = new JobParametersBuilder().toJobParameters();
 			// 通过调用 JobLauncher 中的 run 方法启动一个批处理
-			jobLauncher.run(job, jobParameters);
+			jobLauncher.run(csv2DatabaseJobWithProcess, jobParameters);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

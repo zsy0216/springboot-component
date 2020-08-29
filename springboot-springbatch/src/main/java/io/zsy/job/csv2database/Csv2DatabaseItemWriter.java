@@ -29,4 +29,4 @@ public class Csv2DatabaseItemWriter extends JdbcBatchItemWriter {
 		// 最后通过BeanPropertyItemSqlParameterSourceProvider实例将实体类的属性和SQL中的占位符一一映射
 		setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
 	}
-	}
+}
