@@ -11,17 +11,21 @@
 
     <artifactId>springboot-poi</artifactId>
 
+    <properties>
+        <poi.version>4.1.1</poi.version>
+    </properties>
+
     <dependencies>
         <!-- POI -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
-            <version>4.0.1</version>
+            <version>${poi.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>4.0.1</version>
+            <version>${poi.version}</version>
         </dependency>
 
         <dependency>
