@@ -12,6 +12,8 @@
         <module>springboot-mail</module>
         <module>springboot-poi</module>
         <module>springboot-springbatch</module>
+        <module>springboot-aop</module>
+        <module>springboot-jpa</module>
     </modules>
 
     <!-- 统一管理jar包版本 -->
@@ -19,7 +21,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <mysql.version>5.1.47</mysql.version>
+        <mysql.version>8.0.16</mysql.version>
         <junit.version>4.12</junit.version>
         <log4j.version>1.2.17</log4j.version>
         <lombok.version>1.18.10</lombok.version>
