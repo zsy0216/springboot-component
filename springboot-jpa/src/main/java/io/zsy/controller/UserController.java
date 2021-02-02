@@ -25,7 +25,13 @@ public class UserController {
     }
 
     @GetMapping
-    public Iterable<User> listUser(){
+    public Iterable<User> listUser() {
         return userRepository.findAll();
+    }
+
+    @DeleteMapping("/{id}")
+    public String removeUser(@PathVariable Long id) {
+        userRepository.deleteById(id);
+        return "删除成功";
     }
 }
