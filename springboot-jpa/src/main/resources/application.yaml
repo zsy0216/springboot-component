@@ -1,0 +1,14 @@
+server:
+  port: 8001
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql:///component_jpa
+    username: root
+    password: root
+  jpa:
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
