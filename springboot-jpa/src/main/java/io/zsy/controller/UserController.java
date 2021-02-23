@@ -34,4 +34,9 @@ public class UserController {
         userRepository.deleteById(id);
         return "删除成功";
     }
+
+    @GetMapping("/user")
+    public String findUserByNameAndEmail(String name, String email) {
+        return userRepository.findUserByNameAndEmail(name, email).toString();
+    }
 }

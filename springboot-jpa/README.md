@@ -92,6 +92,9 @@ public class User {
 4. 自定义添加用户
 
 ## 4. 创建操作数据库的接口
+
+示例：
+
 ```java
 @Repository
 public interface UserRepository extends CrudRepository<User, Long> {
@@ -99,3 +102,61 @@ public interface UserRepository extends CrudRepository<User, Long> {
 ```
 
 该接口需继承自 CrudRepository<T, ID> 接口，默认自带了基本的 CRUD 操作。
+
+- T是要操作的实体类，ID是实体类主键的类型。
+- CrudRepository 继承自 Repository<T, ID> 接口，该接口属于基础接口。
+
+实际操作中根据自己的需要继承不同的接口或自定义子接口实现不同的业务需要。
+
+## 5. 接口方法定义规范
+
+JPA 支持根据接口方法名中的关键字映射到 SQL 查询。
+
+详情见：[官网](https://docs.spring.io/spring-data/jpa/docs/2.2.13.RELEASE/reference/html/#jpa.query-methods.query-creation)
+
+| 关键字            | 方法命名                       | sql where字句              |
+| ----------------- | ------------------------------ | -------------------------- |
+| And               | findByNameAndPwd               | where name= ? and pwd =?   |
+| Or                | findByNameOrSex                | where name= ? or sex=?     |
+| Is,Equals         | findById,findByIdEquals        | where id= ?                |
+| Between           | findByIdBetween                | where id between ? and ?   |
+| LessThan          | findByIdLessThan               | where id < ?               |
+| LessThanEquals    | findByIdLessThanEquals         | where id <= ?              |
+| GreaterThan       | findByIdGreaterThan            | where id > ?               |
+| GreaterThanEqual  | findByAgeGreaterThanEqual      | where age >= ?             |
+| After             | findByIdAfter                  | where id > ?               |
+| Before            | findByIdBefore                 | where id < ?               |
+| IsNull            | findByNameIsNull               | where name is null         |
+| isNotNull,NotNull | findByNameNotNull              | where name is not null     |
+| Like              | findByNameLike                 | where name like ?          |
+| NotLike           | findByNameNotLike              | where name not like ?      |
+| StartingWith      | findByNameStartingWith         | where name like '?%'       |
+| EndingWith        | findByNameEndingWith           | where name like '%?'       |
+| Containing        | findByNameContaining           | where name like '%?%'      |
+| OrderBy           | findByIdOrderByXDesc           | where id=? order by x desc |
+| Not               | findByNameNot                  | where name <> ?            |
+| In                | findByIdIn(Collection<?> c)    | where id in (?)            |
+| NotIn             | findByIdNotIn(Collection<?> c) | where id not in (?)        |
+| True              | findByAaaTrue                  | where aaa = true           |
+| False             | findByAaaFalse                 | where aaa = false          |
+| IgnoreCase        | findByNameIgnoreCase           | where UPPER(name)=UPPER(?) |
+| top               | findTop100                     | top 10/where ROWNUM <=10   |
+
+
+示例：
+```java
+@Repository
+public interface UserRepository extends CrudRepository<User, Long> {
+    User findUserByNameAndEmail(String name, String email);
+}
+```
+
+```java
+@GetMapping("/user")
+public String findUserByNameAndEmail(String name, String email) {
+    return userRepository.findUserByNameAndEmail(name, email).toString();
+}
+```
+
+
+
