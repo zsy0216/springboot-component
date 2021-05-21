@@ -24,6 +24,9 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <mysql.version>8.0.16</mysql.version>
         <junit.version>4.12</junit.version>
+        <poi.version>4.1.1</poi.version>
+        <gson.version>2.8.5</gson.version>
+        <jasypt.version>2.1.1</jasypt.version>
         <log4j.version>1.2.17</log4j.version>
         <lombok.version>1.18.10</lombok.version>
         <spring.boot.version>2.2.12.RELEASE</spring.boot.version>
@@ -49,7 +52,31 @@
                 <version>${mysql.version}</version>
             </dependency>
 
+            <!-- poi -->
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
+            </dependency>
+
             <!-- devtools -->
+
+            <!-- 用于日志切面中，以 json 格式打印出入参 -->
+            <dependency>
+                <groupId>com.google.code.gson</groupId>
+                <artifactId>gson</artifactId>
+                <version>${gson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt.version}</version>
+            </dependency>
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -68,6 +95,7 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+    <!--  公共依赖，使每个模块只需要关注特定业务所需要的依赖  -->
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -76,6 +104,36 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- 用于日志切面中，以 json 格式打印出入参 -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+        </dependency>
+
+        <!-- Spring Boot thymeleaf -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+
+        <!-- jasypt 配置文件加解密 -->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 
