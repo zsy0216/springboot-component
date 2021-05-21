@@ -22,19 +22,18 @@ public class BaseResult<T> {
         this.retMsg = retMsg;
     }
 
-    public static BaseResult of(String retCode, String retMsg) {
-        return new BaseResult(retCode, retMsg);
+    public static BaseResult<?> of(String retCode, String retMsg) {
+        return new BaseResult<>(retCode, retMsg);
     }
 
-    public static BaseResult error(GlobalExceptionEnum e) {
+    public static BaseResult<?> error(GlobalExceptionEnum e) {
         return of(e.getCode(), e.getMessage());
     }
-
 
     /**
      * 这里模拟异常，其他成功响应等省略
      */
-    public static BaseResult success(GlobalExceptionEnum e) {
+    public static BaseResult<?> success(GlobalExceptionEnum e) {
         return of(e.getCode(), e.getMessage());
     }
 }
