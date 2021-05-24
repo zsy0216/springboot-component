@@ -20,7 +20,6 @@ public abstract class BaseServiceImpl<M, ID extends Serializable> implements IBa
 
     protected BaseRepository<M, ID> baseRepository;
 
-    @Autowired
     public void setBaseRepository(BaseRepository<M, ID> baseRepository) {
         this.baseRepository = baseRepository;
     }

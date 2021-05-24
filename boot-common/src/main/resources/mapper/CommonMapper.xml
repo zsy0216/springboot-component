@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="io.zsy.common.dao.CommonRepository">
+    <!-- 以下两个<cache>标签二选一,第一个可以输出日志,第二个不输出日志 -->
+    <!--<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>-->
+    <!--<cache type="org.mybatis.caches.ehcache.EhcacheCache"/>-->
+    <sql id="Where_Clause">
+        <if test="operators != null and operators.size > 0">
+            <where>
+                <foreach collection="operators" index="index" item="item">
+                    <choose>
+                        <when test="item.operator.symbol == 'in' or item.operator.symbol == 'not in'">
+                            ${item.key}
+                            <foreach collection="item.value" item="inItem"
+                                     open=" (" close=") " separator=", ">#{inItem}</foreach>
+                        </when>
+                        <otherwise>
+                            ${item.key} #{item.value}
+                        </otherwise>
+                    </choose>
+                </foreach>
+            </where>
+        </if>
+    </sql>
+    <sql id="OrderBy_Clause">
+        <if test="pageForm != null and pageForm.orders != null and pageForm.orders.size > 0">
+            order by
+            <foreach collection="pageForm.orders" index="index" item="item" open="" separator="," close="">
+                ${item}
+            </foreach>
+        </if>
+    </sql>
+
+    <sql id="Page_Clause">
+        <if test="pageForm != null and pageForm.page >= 0 and pageForm.limit > 0">
+            limit ${pageForm.offset}, ${pageForm.limit}
+        </if>
+    </sql>
+</mapper>
