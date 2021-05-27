@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
@@ -52,6 +53,10 @@ public final class DateUtils {
         return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
+    public static long toCurrentTimeMillis(LocalDateTime localDateTime) {
+        return localDateTime.toInstant(ZoneOffset.ofHours(8)).toEpochMilli();
+    }
+
     public static Instant toInstant(LocalDateTime localDateTime) {
         return localDateTime.atZone(ZoneId.systemDefault()).toInstant();
     }
@@ -59,8 +64,10 @@ public final class DateUtils {
     public static void main(String[] args) {
         LocalDateTime localDateTime = LocalDateTime.now();
         System.out.println(localDateTime.format(YYYY_MM_DD));
-        System.out.println(localDateTime.format(ISO_LOCAL_TIME));
-        System.out.println(localDateTime.format(ISO_TIME));
-        System.out.println(localDateTime.format(ISO_LOCAL_DATE_TIME));
+        System.out.println(toInstant(localDateTime));
+        System.out.println(toCurrentTimeMillis(localDateTime));
+        System.out.println(localDateTime.toInstant(ZoneOffset.ofHours(8)).toEpochMilli());
+        System.out.println(localDateTime.toEpochSecond(ZoneOffset.ofHours(8)));
+        System.out.println(System.currentTimeMillis());
     }
 }
