@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>io.zsy</groupId>
-    <artifactId>boot-common</artifactId>
+    <artifactId>springboot-common</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
     <name>${artifactId}</name>
