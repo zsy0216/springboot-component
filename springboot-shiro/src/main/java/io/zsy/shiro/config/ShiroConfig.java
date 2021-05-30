@@ -2,19 +2,8 @@ package io.zsy.shiro.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.subject.PrincipalCollection;
-import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -47,13 +36,14 @@ public class ShiroConfig {
          */
         Map<String, String> filterMap = new LinkedHashMap<>();
 
-        // filterMap.put("/user/*", "authc");
         // filterMap.put("/user/add", "authc");
-        filterMap.put("/user/update", "authc");
+        // filterMap.put("/user/update", "authc");
 
         // 给请求设置权限
         filterMap.put("/user/add", "perms[user:add]");
+        filterMap.put("/user/update", "perms[user:update]");
 
+        filterMap.put("/user/*", "authc"); // 认证写在授权下面
         shiroFilterBean.setFilterChainDefinitionMap(filterMap);
 
         // 设置登录请求地址
@@ -61,7 +51,7 @@ public class ShiroConfig {
         // 登录成功后要跳转的链接
         shiroFilterBean.setSuccessUrl("/index");
         //未授权请求;
-        shiroFilterBean.setUnauthorizedUrl("/login");
+        shiroFilterBean.setUnauthorizedUrl("/401.html");
         return shiroFilterBean;
     }
 
@@ -77,40 +67,12 @@ public class ShiroConfig {
     // 创建 Realm 对象, 需要实现Realm类型的类
     @Bean
     public Realm userRealm() {
-        return new AuthorizingRealm() {
-            // 认证
-            @Override
-            protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
-                log.info("执行认证~~~");
-                // 伪造用户数据
-                String username = "root";
-                String password = "123456";
-                UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-                if (!username.equals(token.getUsername())) {
-                    return null; // 抛出异常 UnknownAccountException
-                }
-                // shiro 进行密码认证
-                return new SimpleAuthenticationInfo("", password, "");
-            }
-
-            // 授权
-            @Override
-            protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-                log.info("执行授权~~~");
-                SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-                info.addStringPermission("user:add");
-                // 授权时取出
-                Subject subject = SecurityUtils.getSubject();
-                // User user = (User) subject.getPrincipal();
-                // 设置权限
-                // info.setStringPermissions();
-                return info;
-            }
-        };
+        return new UserRealm();
     }
 
     /**
      * ShiroDialect，为了在thymeleaf里使用shiro的标签的bean
+     *
      * @return ShiroDialect
      */
     @Bean

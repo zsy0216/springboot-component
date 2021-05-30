@@ -21,6 +21,10 @@ public class HelloController {
         model.addAttribute("msg", "World");
         return "index";
     }
+    @RequestMapping({"/401.html",})
+    public String toUnAuth(Model model) {
+        return "401";
+    }
 
     @RequestMapping({"/login"})
     public String toLogin(Model model) {

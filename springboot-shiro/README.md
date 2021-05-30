@@ -89,22 +89,22 @@ role: 拥有某个角色权限才能访问
 ```java
 @Bean
 public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager){
-        ShiroFilterFactoryBean shiroFilterBean=new ShiroFilterFactoryBean();
-        // 关联 DefaultWebSecurityManager
-        shiroFilterBean.setSecurityManager(securityManager);
+    ShiroFilterFactoryBean shiroFilterBean=new ShiroFilterFactoryBean();
+    // 关联 DefaultWebSecurityManager
+    shiroFilterBean.setSecurityManager(securityManager);
 
-        // 添加 shiro 的内置过滤器
-        Map<String, String> filterMap=new LinkedHashMap<>();
+    // 添加 shiro 的内置过滤器
+    Map<String, String> filterMap=new LinkedHashMap<>();
 
-        // 支持通配符 filterMap.put("/user/*", "authc"); user/下的请求必须认证
-        filterMap.put("/user/add","authc");
-        filterMap.put("/user/update","authc");
-        shiroFilterBean.setFilterChainDefinitionMap(filterMap);
+    // 支持通配符 filterMap.put("/user/*", "authc"); user/下的请求必须认证
+    filterMap.put("/user/add","authc");
+    filterMap.put("/user/update","authc");
+    shiroFilterBean.setFilterChainDefinitionMap(filterMap);
 
-        // 设置登录请求地址
-        shiroFilterBean.setLoginUrl("/login");
-        return shiroFilterBean;
-        }
+    // 设置登录请求地址
+    shiroFilterBean.setLoginUrl("/login");
+    return shiroFilterBean;
+}
 ```
 
 ## 登录认证
@@ -114,22 +114,22 @@ public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager
 ```java
 @PostMapping("/login")
 public String login(String username,String password,Model model){
-        // 获取当前用户
-        Subject subject=SecurityUtils.getSubject();
-        // 封装用户数据
-        UsernamePasswordToken token=new UsernamePasswordToken(username,password);
-        try{
+    // 获取当前用户
+    Subject subject=SecurityUtils.getSubject();
+    // 封装用户数据
+    UsernamePasswordToken token=new UsernamePasswordToken(username,password);
+    try{
         // 执行登录操作
         subject.login(token);
         return"index";
-        }catch(UnknownAccountException e){
+    } catch(UnknownAccountException e) {
         model.addAttribute("msg","用户名错误");
         return"login";
-        }catch(IncorrectCredentialsException e){
+    } catch(IncorrectCredentialsException e) {
         model.addAttribute("msg","密码错误");
         return"login";
-        }
-        }
+    }
+}
 ```
 
 2. shiro 认证
@@ -139,23 +139,23 @@ public String login(String username,String password,Model model){
 ```java
 @Bean
 public Realm userRealm(){
-        return new AuthorizingRealm(){
-// 认证
-@Override
-protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)throws AuthenticationException{
-        log.info("执行认证~~~");
-        // 伪造用户数据
-        String username="root";
-        String password="123456";
-        UsernamePasswordToken token=(UsernamePasswordToken)authenticationToken;
-        if(!username.equals(token.getUsername())){
-        return null; // 抛出异常 UnknownAccountException
-        }
-        // shiro 进行密码认证
-        return new SimpleAuthenticationInfo("",password,"");
-        }
-        }
-        }
+    return new AuthorizingRealm(){
+        // 认证
+        @Override
+        protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)throws AuthenticationException{
+            log.info("执行认证~~~");
+            // 伪造用户数据
+            String username="root";
+            String password="123456";
+            UsernamePasswordToken token=(UsernamePasswordToken)authenticationToken;
+            if(!username.equals(token.getUsername())){
+                return null; // 抛出异常 UnknownAccountException
+            }
+            // shiro 进行密码认证
+            return new SimpleAuthenticationInfo("",password,"");
+        }   
+    }
+}
 ```
 
 此时，登录后就可以请求之前的 用户添加和修改页面了。
@@ -167,15 +167,19 @@ protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authent
 ```java
 @Bean
 public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager){
-        // ...
-        Map<String, String> filterMap=new LinkedHashMap<>();
+    // ...
+    Map<String, String> filterMap=new LinkedHashMap<>();
 
-        // 给请求设置权限 访问 /user/add 需要拥有 user:add 权限
-        filterMap.put("/user/add","perms[user:add]");
-
-        shiroFilterBean.setFilterChainDefinitionMap(filterMap);
-        return shiroFilterBean;
-        }
+    // 给请求设置权限 访问 /user/add 需要拥有 user:add 权限
+    filterMap.put("/user/add","perms[user:add]");
+    filterMap.put("/user/update", "perms[user:update]");
+   
+    filterMap.put("/user/*", "authc"); // 认证写在授权下面
+    shiroFilterBean.setFilterChainDefinitionMap(filterMap);
+     //未授权请求;
+    shiroFilterBean.setUnauthorizedUrl("/401");
+    return shiroFilterBean;
+}
 ```
 
 访问 /user/add 需要拥有 user:add 权限
@@ -186,11 +190,11 @@ public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager
  // 授权
 @Override
 protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection){
-        log.info("执行授权~~~");
-        SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
-        info.addStringPermission("user:add");
-        return info;
-        }
+    log.info("执行授权~~~");
+    SimpleAuthorizationInfo info=new SimpleAuthorizationInfo();
+    info.addStringPermission("user:add");
+    return info;
+}   
 ```
 
 这里默认给所有需要授权的用户添加了该权限，实际开发中应该从数据库中读取登录用户的权限，判断是否授权成功；
@@ -202,12 +206,59 @@ protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principal
 return new SimpleAuthenticationInfo(user,password,"");
 
 // 授权时取出
-        Subject subject=SecurityUtils.getSubject();
-        User user=(User)subject.getPrincipal();
+Subject subject=SecurityUtils.getSubject();
+User user=(User)subject.getPrincipal();
 // 设置权限
-        info.serStringPermissions(user.getPerms());
+info.serStringPermissions(user.getPerms());
 
 ```
+
+## 整合 mybatis 认证授权
+
+
+
+上面我们设置了默认的账号密码来进行认证，下面演示整合数据库读取用户数据完成认证。
+
+### 认证
+
+认证时，将登陆的用户信息传递到 SimpleAuthenticationInfo，这样授权时可以根据该信息获取用户权限信息。
+
+```java
+@Override
+protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
+    log.info("执行认证~~~");
+    UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
+    // 查询数据库
+    User user = userService.selectByUsername(token.getUsername());
+    // 判断用户名
+    if (Objects.isNull(user)) {
+        return null; // 抛出异常 UnknownAccountException
+    }
+    // shiro 进行密码认证
+    return new SimpleAuthenticationInfo(user, user.getPassword(), "");
+}
+```
+
+### 授权
+
+```java
+@Override
+protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+    log.info("执行授权~~~");
+    SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+    // 获取登陆用户信息
+    Subject subject = SecurityUtils.getSubject();
+    User user = (User) subject.getPrincipal();
+    // 设置权限
+    info.addStringPermission(user.getPerms());
+    // 设置多个权限 info.setStringPermissions();
+    return info;
+}
+```
+
+设置多个权限 info.setStringPermissions();
+
+
 
 ## 整合 Thymeleaf
 
@@ -230,5 +281,4 @@ public ShiroDialect shiroDialect(){
 ```
 
 参考 index.html
-
 
