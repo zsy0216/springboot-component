@@ -32,7 +32,7 @@
         <jasypt.version>2.1.1</jasypt.version>
         <log4j.version>1.2.17</log4j.version>
         <lombok.version>1.18.10</lombok.version>
-        <spring.boot.version>2.2.5.Release</spring.boot.version>
+        <spring.boot.version>2.4.6</spring.boot.version>
     </properties>
 
     <!-- 子模块继承之后，提供作用：锁定版本 + 子模块不用再写 version  -->
@@ -155,31 +155,4 @@
         </dependency>
     </dependencies>
 
-    <repositories>
-        <repository>
-            <id>aliyun</id>
-            <name>aliyun</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <version>${spring.boot.version}</version>
-                <configuration>
-                    <fork>true</fork>
-                    <addResources>true</addResources>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
 </project>
