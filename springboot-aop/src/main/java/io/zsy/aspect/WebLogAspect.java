@@ -37,7 +37,7 @@ public class WebLogAspect {
         startTime = System.currentTimeMillis();
         // 执行切点
         Object result = pjp.proceed();
-        log.info("返回结果: {}", new Gson().toJson(result));
+        log.info("返回结果: {}", result);
         log.info("耗时: {}ms", System.currentTimeMillis() - startTime);
         log.info("********** 环绕通知日志结束 **********");
         return result;
@@ -59,7 +59,7 @@ public class WebLogAspect {
         String aspectLogDescription = getAspectLogDescription(joinPoint);
 
         assert request != null;
-        log.info("请求Url: {}", request.getRequestURI().toString());
+        log.info("请求Url: {}", request.getRequestURI());
         log.info("注解描述: {}", aspectLogDescription);
         log.info("请求方式: {}", request.getMethod());
         log.info("执行方法: {}.{}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
