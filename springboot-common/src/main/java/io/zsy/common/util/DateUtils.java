@@ -17,10 +17,11 @@ import java.util.Date;
 public final class DateUtils {
 
 
-    private final static DateTimeFormatter YYYY_MM_DD = DateTimeFormatter.ISO_LOCAL_DATE;
-    private final static DateTimeFormatter ISO_LOCAL_TIME = DateTimeFormatter.ISO_LOCAL_TIME;
-    private final static DateTimeFormatter ISO_TIME = DateTimeFormatter.ISO_TIME;
-    private final static DateTimeFormatter ISO_LOCAL_DATE_TIME = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+    private final static DateTimeFormatter ISO_LOCAL_DATE = DateTimeFormatter.ISO_LOCAL_DATE; //2021-06-02
+    private final static DateTimeFormatter BASIC_ISO_DATE = DateTimeFormatter.BASIC_ISO_DATE; //20210602
+    private final static DateTimeFormatter ISO_LOCAL_TIME = DateTimeFormatter.ISO_LOCAL_TIME; //15:33:42.533
+    private final static DateTimeFormatter ISO_TIME = DateTimeFormatter.ISO_TIME; //15:33:42.533
+    private final static DateTimeFormatter ISO_LOCAL_DATE_TIME = DateTimeFormatter.ISO_LOCAL_DATE_TIME; //2021-06-02T15:33:42.533
 
     /**
      * LocalDateTime -> Date
@@ -63,7 +64,11 @@ public final class DateUtils {
 
     public static void main(String[] args) {
         LocalDateTime localDateTime = LocalDateTime.now();
-        System.out.println(localDateTime.format(YYYY_MM_DD));
+        System.out.println(localDateTime.format(ISO_LOCAL_DATE));
+        System.out.println(localDateTime.format(BASIC_ISO_DATE));
+        System.out.println(localDateTime.format(ISO_LOCAL_TIME));
+        System.out.println(localDateTime.format(ISO_TIME));
+        System.out.println(localDateTime.format(ISO_LOCAL_DATE_TIME));
         System.out.println(toInstant(localDateTime));
         System.out.println(toCurrentTimeMillis(localDateTime));
         System.out.println(localDateTime.toInstant(ZoneOffset.ofHours(8)).toEpochMilli());
