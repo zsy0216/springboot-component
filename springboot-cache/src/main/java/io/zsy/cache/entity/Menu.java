@@ -1,4 +1,4 @@
-package io.zsy.entity;
+package io.zsy.cache.entity;
 
 import lombok.Data;
 
