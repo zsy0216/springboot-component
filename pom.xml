@@ -16,6 +16,7 @@
         <module>springboot-jpa</module>
         <module>springboot-exception</module>
         <module>springboot-shiro</module>
+        <module>springboot-mybatis</module>
     </modules>
 
     <!-- 统一管理jar包版本 -->
