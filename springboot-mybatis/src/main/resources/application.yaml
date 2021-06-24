@@ -1,9 +1,9 @@
 spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://rm-2jdm0u2oui38q95pf.mysql.rds.aliyuncs.com:3306/test?useUnicode=true&useSSL=false
-    username: lmldba
-    password: lMl12345
+    url: jdbc:mysql://:3306/test?useUnicode=true&useSSL=false
+    username: 123
+    password: 123
     driver-class-name: com.mysql.cj.jdbc.Driver
 
     #Spring Boot 默认是不注入这些属性值的，需要自己绑定
@@ -29,7 +29,7 @@ spring:
       useGlobalDataSourceStat: true
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
 mybatis:
-  type-aliases-package: io.zsy.entity
+  type-aliases-package: io.zsy.cache.entity
   mapper-locations: classpath:/mapper/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -1,6 +1,6 @@
 package io.zsy;
 
-import io.zsy.mapper.MenuMapper;
+import io.zsy.cache.mapper.MenuMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 

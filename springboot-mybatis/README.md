@@ -49,7 +49,7 @@ spring:
       useGlobalDataSourceStat: true
       connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
 mybatis:
-  type-aliases-package: io.zsy.entity
+  type-aliases-package: io.zsy.cache.entity
   mapper-locations: classpath:/mapper/*.xml
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -63,19 +63,19 @@ mybatis:
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 这里对应 mapper 接口 -->
-<mapper namespace="io.zsy.mapper.MenuMapper">
+<mapper namespace="io.zsy.cache.mapper.MenuMapper">
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="io.zsy.entity.Menu">
-        <id column="id" property="id" />
-        <result column="parent_id" property="parentId" />
-        <result column="path" property="path" />
-        <result column="redirect" property="redirect" />
-        <result column="component" property="component" />
-        <result column="name" property="name" />
-        <result column="title" property="title" />
-        <result column="sort" property="sort" />
-        <result column="icon" property="icon" />
-        <result column="hidden" property="hidden" />
+    <resultMap id="BaseResultMap" type="io.zsy.cache.entity.Menu">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="path" property="path"/>
+        <result column="redirect" property="redirect"/>
+        <result column="component" property="component"/>
+        <result column="name" property="name"/>
+        <result column="title" property="title"/>
+        <result column="sort" property="sort"/>
+        <result column="icon" property="icon"/>
+        <result column="hidden" property="hidden"/>
     </resultMap>
 
     <!-- 通用查询结果列 -->

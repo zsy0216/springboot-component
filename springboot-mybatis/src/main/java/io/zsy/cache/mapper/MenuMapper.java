@@ -1,6 +1,6 @@
-package io.zsy.mapper;
+package io.zsy.cache.mapper;
 
-import io.zsy.entity.Menu;
+import io.zsy.cache.entity.Menu;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;

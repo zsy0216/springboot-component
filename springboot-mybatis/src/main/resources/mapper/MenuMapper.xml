@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- 这里对应 mapper 接口 -->
-<mapper namespace="io.zsy.mapper.MenuMapper">
+<mapper namespace="io.zsy.cache.mapper.MenuMapper">
     <!-- 通用查询映射结果 -->
-    <resultMap id="BaseResultMap" type="io.zsy.entity.Menu">
+    <resultMap id="BaseResultMap" type="io.zsy.cache.entity.Menu">
         <id column="id" property="id" />
         <result column="parent_id" property="parentId" />
         <result column="path" property="path" />
@@ -22,6 +22,6 @@
     </sql>
 
     <select id="selectList" resultMap="BaseResultMap">
-        select * from admin_menu;
+        select <include refid="Base_Column_List" /> from admin_menu;
     </select>
 </mapper>
