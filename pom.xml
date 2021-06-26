@@ -19,6 +19,7 @@
         <module>springboot-http</module>
         <module>springboot-mybatis</module>
         <module>springboot-cache</module>
+        <module>springboot-redis</module>
     </modules>
 
     <!-- 统一管理jar包版本 -->
