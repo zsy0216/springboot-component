@@ -2,6 +2,8 @@ package io.zsy.cache.entity;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * 动态菜单信息表
  *
@@ -9,7 +11,7 @@ import lombok.Data;
  * @since 2021-06-21
  */
 @Data
-public class Menu {
+public class Menu implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

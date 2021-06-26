@@ -3,8 +3,10 @@ spring:
     type: com.zaxxer.hikari.HikariDataSource
     url: jdbc:mysql://localhost:3306/test?useUnicode=true&useSSL=false
     username: root
-    password: 123456
+    password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+  redis:
+    password: 123456
 mybatis:
   type-aliases-package: io.zsy.cache.entity
   mapper-locations: classpath:/mapper/*.xml
