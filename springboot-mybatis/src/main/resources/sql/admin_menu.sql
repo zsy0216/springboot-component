@@ -11,7 +11,7 @@
  Target Server Version : 50670
  File Encoding         : 65001
 
- Date: 24/06/2021 13:50:53
+ Date: 24/06/2021 15:57:32
 */
 
 SET NAMES utf8mb4;
@@ -38,24 +38,22 @@ CREATE TABLE `admin_menu`  (
 -- ----------------------------
 -- Records of admin_menu
 -- ----------------------------
-INSERT INTO `admin_menu` VALUES (1, 0, '/', '/dashboard', 'Layout', '', '首页', 0, '', 0);
+INSERT INTO `admin_menu` VALUES (1, 0, '', '/dashboard', 'Layout', '', '首页', 0, '', 0);
 INSERT INTO `admin_menu` VALUES (2, 1, 'dashboard', NULL, 'dashboard/index', 'Dashboard', '首页', 1, 'dashboard', 0);
 INSERT INTO `admin_menu` VALUES (3, 0, '/menu', '/menu/table', 'Layout', 'Menu', '菜单管理', 0, 'el-icon-s-help', 0);
-INSERT INTO `admin_menu` VALUES (4, 3, 'table', NULL, '() => import(\'@/views/table/index\')', 'Table', '菜单列表', 1, 'table', 0);
-INSERT INTO `admin_menu` VALUES (5, 3, 'tree', NULL, '() => import(\'@/views/tree/index\')', 'Tree', '树形结构', 2, 'tree', 0);
+INSERT INTO `admin_menu` VALUES (4, 3, 'table', NULL, 'table/index', 'Table', '菜单列表', 1, 'table', 0);
+INSERT INTO `admin_menu` VALUES (5, 3, 'tree', NULL, 'tree/index', 'Tree', '树形结构', 2, 'tree', 0);
 INSERT INTO `admin_menu` VALUES (6, 0, '/form', NULL, 'Layout', NULL, NULL, 0, NULL, 0);
-INSERT INTO `admin_menu` VALUES (7, 6, 'index', NULL, '() => import(\'@/views/form/index\')', 'Form', '填写表单', 1, 'form', 0);
+INSERT INTO `admin_menu` VALUES (7, 6, 'index', NULL, 'form/index', 'Form', '填写表单', 1, 'form', 0);
 INSERT INTO `admin_menu` VALUES (8, 0, '/nested', '/nested/menu1', 'Layout', 'Nested', '级联菜单', 0, 'nested', 0);
-INSERT INTO `admin_menu` VALUES (9, 8, 'menu1', NULL, '() => import(\'@/views/nested/menu1/index\')', 'Menu1', '一级菜单', 1, NULL, 0);
-INSERT INTO `admin_menu` VALUES (10, 9, 'menu1-1', NULL, '() => import(\'@/views/nested/menu1/menu1-1\')', 'Menu1-1', '一级菜单-1', 2, NULL, 0);
-INSERT INTO `admin_menu` VALUES (11, 9, 'menu1-2', NULL, '() => import(\'@/views/nested/menu1/menu1-2\')', 'Menu1-2', '一级菜单-2', 3, NULL, 0);
-INSERT INTO `admin_menu` VALUES (12, 11, 'menu1-2-1', NULL, '() => import(\'@/views/nested/menu1/menu1-2/menu1-2-1\')', 'Menu1-2-1', '二级菜单-1', 5, NULL, 0);
-INSERT INTO `admin_menu` VALUES (13, 11, 'menu1-2-2', NULL, '() => import(\'@/views/nested/menu1/menu1-2/menu1-2-2\')', 'Menu1-2-2', '二级菜单-2', 6, NULL, 0);
-INSERT INTO `admin_menu` VALUES (14, 9, 'menu1-3', NULL, '() => import(\'@/views/nested/menu1/menu1-3\')', 'Menu1-3', '一级菜单-3', 4, NULL, 0);
-INSERT INTO `admin_menu` VALUES (15, 8, 'menu2', NULL, '() => import(\'@/views/nested/menu2/index\')', 'Menu2', '一级菜单2', 1, NULL, 0);
+INSERT INTO `admin_menu` VALUES (9, 8, 'menu1', NULL, 'nested/menu1/index', 'Menu1', '一级菜单', 1, NULL, 0);
+INSERT INTO `admin_menu` VALUES (10, 9, 'menu1-1', NULL, 'nested/menu1/menu1-1', 'Menu1-1', '一级菜单-1', 2, NULL, 0);
+INSERT INTO `admin_menu` VALUES (11, 9, 'menu1-2', NULL, 'nested/menu1/menu1-2', 'Menu1-2', '一级菜单-2', 3, NULL, 0);
+INSERT INTO `admin_menu` VALUES (12, 11, 'menu1-2-1', NULL, 'nested/menu1/menu1-2/menu1-2-1', 'Menu1-2-1', '二级菜单-1', 5, NULL, 0);
+INSERT INTO `admin_menu` VALUES (13, 11, 'menu1-2-2', NULL, 'nested/menu1/menu1-2/menu1-2-2', 'Menu1-2-2', '二级菜单-2', 6, NULL, 0);
+INSERT INTO `admin_menu` VALUES (14, 9, 'menu1-3', NULL, 'nested/menu1/menu1-3', 'Menu1-3', '一级菜单-3', 4, NULL, 0);
+INSERT INTO `admin_menu` VALUES (15, 8, 'menu2', NULL, 'nested/menu2/index', 'Menu2', '一级菜单2', 1, NULL, 0);
 INSERT INTO `admin_menu` VALUES (16, 0, 'external-link', NULL, 'Layout', NULL, NULL, 0, NULL, 0);
 INSERT INTO `admin_menu` VALUES (17, 16, 'https://www.gitee.com/zsy0216', NULL, '', NULL, 'Gitee', 0, 'link', 0);
-INSERT INTO `admin_menu` VALUES (9998, 0, '/404', NULL, '() => import(\'@/views/404\')', '', '', 9998, NULL, 1);
+INSERT INTO `admin_menu` VALUES (9998, 0, '/404', NULL, 'views/404', '', '', 9998, NULL, 1);
 INSERT INTO `admin_menu` VALUES (9999, 0, '*', '/404', '', '', '', 9999, NULL, 1);
-
-SET FOREIGN_KEY_CHECKS = 1;
