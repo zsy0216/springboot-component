@@ -1,4 +1,4 @@
-package io.zsy.common.constants;
+package io.zsy.common.constant;
 
 import io.zsy.common.exception.BaseException;
 
@@ -6,34 +6,38 @@ import java.util.Arrays;
 
 /**
  * @author zhangshuaiyin
- * @date 2021-05-21 16:42
+ * @date 2021/5/31 21:58
  */
 public enum ErrorMessage {
     /**
+     * 成功
+     */
+    SUCCESS("200", "success"),
+    /**
      * 系统异常
      */
-    SYSTEM_ERROR("99999", "系统异常, 请联系管理员"),
-    INVALID_PARAM("00000", "报文参数校验不通过"),
+    SYSTEM_ERROR("999999", "系统异常, 请联系管理员"),
+    INVALID_PARAM("A00001", "报文参数校验不通过"),
     ;
 
     /**
      * 错误代码
      */
-    private final String errorCode;
+    private final String code;
     /**
      * 错误信息
      */
-    private final String errorMessage;
+    private final String message;
 
     /**
      * 构造方法
      *
-     * @param errorCode    错误代码
-     * @param errorMessage 错误描述
+     * @param code    错误代码
+     * @param message 错误描述
      */
-    ErrorMessage(String errorCode, String errorMessage) {
-        this.errorCode = errorCode;
-        this.errorMessage = errorMessage;
+    ErrorMessage(String code, String message) {
+        this.code = code;
+        this.message = message;
     }
 
     /**
@@ -44,7 +48,7 @@ public enum ErrorMessage {
      */
     public static ErrorMessage of(String errorCode) {
         return Arrays.stream(ErrorMessage.values())
-                .filter(error -> error.equalsWith(errorCode))
+                .filter(code -> code.equalsWith(errorCode))
                 .findFirst()
                 .orElse(null);
     }
@@ -56,7 +60,7 @@ public enum ErrorMessage {
      * @return 是否存在错误代码
      */
     public boolean equalsWith(String errorCode) {
-        return this.getErrorCode().equals(errorCode);
+        return this.getCode().equals(errorCode);
     }
 
     /**
@@ -64,8 +68,8 @@ public enum ErrorMessage {
      *
      * @return 错误代码
      */
-    public String getErrorCode() {
-        return errorCode;
+    public String getCode() {
+        return code;
     }
 
     /**
@@ -73,8 +77,8 @@ public enum ErrorMessage {
      *
      * @return 错误描述
      */
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getMessage() {
+        return message;
     }
 
     /**
@@ -83,6 +87,6 @@ public enum ErrorMessage {
      * @return 错误异常
      */
     public BaseException getBaseException() {
-        return new BaseException(this.getErrorCode(), this.getErrorMessage());
+        return new BaseException(this.getCode(), this.getMessage());
     }
 }

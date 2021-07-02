@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
  * 公共异常类
  *
  * @author zhangshuaiyin
- * @date 2021-05-21 16:31
+ * @date 2021/5/31 21:58
  */
 public class BaseException extends RuntimeException {
     /**

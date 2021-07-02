@@ -1,14 +1,15 @@
 package io.zsy.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import io.zsy.common.constant.ErrorMessage;
+import io.zsy.common.exception.BaseException;
 import io.swagger.annotations.ApiModelProperty;
-import io.zsy.common.constants.ErrorMessage;
 
 /**
  * 公共响应类
  *
  * @author zhangshuaiyin
- * @date 2021-05-21 16:01
+ * @date 2021/5/31 21:58
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseResponse<T> {
@@ -101,6 +102,20 @@ public class BaseResponse<T> {
         this.retMessage = retMsg;
     }
 
+    public BaseResponse(String retCode, String retMessage, T data) {
+        this(retCode, retMessage);
+        this.data = data;
+    }
+
+    /**
+     * 构造方法
+     *
+     * @param e 异常对象
+     */
+    public BaseResponse(BaseException e) {
+        this(e.getExceptionCode(), e.getExceptionMessage());
+    }
+
     /**
      * 创建响应对象
      *
@@ -108,18 +123,50 @@ public class BaseResponse<T> {
      * @param retMsg  响应描述
      * @return 响应对象
      */
-    public static BaseResponse<?> of(String retCode, String retMsg) {
+    public static <T> BaseResponse<T> of(String retCode, String retMsg) {
         return new BaseResponse<>(retCode, retMsg);
     }
 
     /**
      * 创建响应对象
      *
-     * @param message 错误代码
+     * @param retCode 响应码
+     * @param retMsg  响应描述
+     * @param data    响应数据
      * @return 响应对象
      */
-    public static BaseResponse<?> of(ErrorMessage message) {
-        return new BaseResponse<>(message.getErrorCode(), message.getErrorMessage());
+    public static <T> BaseResponse<T> of(String retCode, String retMsg, T data) {
+        return new BaseResponse<>(retCode, retMsg, data);
     }
 
+    /**
+     * 创建响应对象
+     *
+     * @param e 异常对象
+     * @return 响应对象
+     */
+    public static <T> BaseResponse<T> of(BaseException e) {
+        return new BaseResponse<>(e);
+    }
+
+    /**
+     * 创建响应对象
+     *
+     * @param message 响应信息
+     * @return 响应对象
+     */
+    public static <T> BaseResponse<T> of(ErrorMessage message) {
+        return of(message.getCode(), message.getMessage());
+    }
+
+    /**
+     * 创建响应对象
+     *
+     * @param message 响应信息
+     * @param data    响应对象
+     * @return 响应对象
+     */
+    public static <T> BaseResponse<T> of(ErrorMessage message, T data) {
+        return of(message.getCode(), message.getMessage(), data);
+    }
 }

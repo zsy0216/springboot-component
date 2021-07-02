@@ -9,16 +9,16 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
+import springfox.documentation.swagger2.annotations.EnableSwagger2WebMvc;
 
 /**
  * Swagger 配置类
  *
  * @author zhangshuaiyin
- * @date 2021-05-21 17:00
+ * @date 2021/5/31 21:58
  */
-@Configuration // 启动时加载类
-@EnableSwagger2 // 启用Swagger API文档
+@Configuration
+@EnableSwagger2WebMvc
 public class SwaggerConfig {
     /**
      * 创建API应用
@@ -34,9 +34,10 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 //标注@Api等注解的接口代码路径
-                .apis(RequestHandlerSelectors.basePackage("io.zsy.controller"))
+                .apis(RequestHandlerSelectors.basePackage("io.zsy.admin.controller"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .groupName("Typos Admin接口文档V1.0");
     }
 
     /**
@@ -47,12 +48,12 @@ public class SwaggerConfig {
      */
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("这里写标题")
-                .description("这里是描述")
+                .title("Typos API")
+                .description("Typos 后台管理接口文档")
                 //服务条款网址
                 .termsOfServiceUrl("")
                 .version("1.0")
-                .contact(new Contact("ZSY", "http://127.0.0.1/", "594983498@qq.com"))
+                .contact(new Contact("typos", "http://127.0.0.1/", "594983498@qq.com"))
                 .build();
     }
 }

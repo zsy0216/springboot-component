@@ -3,6 +3,12 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.4.8</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
 
     <groupId>io.zsy</groupId>
     <artifactId>springboot-component</artifactId>
@@ -16,6 +22,7 @@
         <module>springboot-jpa</module>
         <module>springboot-exception</module>
         <module>springboot-shiro</module>
+        <module>springboot-common</module>
         <module>springboot-http</module>
         <module>springboot-mybatis</module>
         <module>springboot-cache</module>
@@ -24,41 +31,20 @@
 
     <!-- 统一管理jar包版本 -->
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <mysql.version>8.0.16</mysql.version>
         <druid.version>1.1.20</druid.version>
         <mybatis.version>2.1.4</mybatis.version>
-        <junit.version>4.12</junit.version>
         <poi.version>4.1.1</poi.version>
         <gson.version>2.8.5</gson.version>
         <fastjson.version>1.2.75</fastjson.version>
         <jasypt.version>2.1.1</jasypt.version>
         <log4j.version>1.2.17</log4j.version>
-        <lombok.version>1.18.10</lombok.version>
-        <spring.boot.version>2.4.6</spring.boot.version>
+        <swagger.version>2.0.7</swagger.version>
     </properties>
 
     <!-- 子模块继承之后，提供作用：锁定版本 + 子模块不用再写 version  -->
     <dependencyManagement>
         <dependencies>
-            <!-- spring boot -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>${spring.boot.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
             <!-- database relative -->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <scope>runtime</scope>
-                <version>${mysql.version}</version>
-            </dependency>
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid-spring-boot-starter</artifactId>
@@ -101,20 +87,16 @@
                 <version>${jasypt.version}</version>
             </dependency>
             <dependency>
-                <groupId>junit</groupId>
-                <artifactId>junit</artifactId>
-                <version>${junit.version}</version>
-            </dependency>
-            <dependency>
                 <groupId>log4j</groupId>
                 <artifactId>log4j</artifactId>
                 <version>${log4j.version}</version>
             </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.github.xiaoymin/knife4j-spring-boot-starter -->
             <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
-                <optional>true</optional>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${swagger.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

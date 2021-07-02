@@ -1,6 +1,6 @@
 package io.zsy.common.intercepter;
 
-import io.zsy.common.constants.ErrorMessage;
+import io.zsy.common.constant.ErrorMessage;
 import io.zsy.common.dto.BaseResponse;
 import io.zsy.common.exception.BaseException;
 import org.apache.commons.lang3.StringUtils;
@@ -25,7 +25,7 @@ import java.util.Set;
  * 异常可以有很多自定义的Exception, 异常也可以有乐观锁这些问题。
  *
  * @author zhangshuaiyin
- * @date 2021-05-21 16:37
+ * @date 2021/5/31 21:58
  */
 @RestControllerAdvice
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
@@ -39,9 +39,9 @@ public class GlobalExceptionHandler {
      * @return BizResponse
      */
     @ExceptionHandler(value = BaseException.class)
-    public BaseResponse<?> handleException(BaseException e) {
+    public <T> BaseResponse<T> handleException(BaseException e) {
         logger.error("已识别异常, 异常信息: {}", e.getLocalizedMessage());
-        return BaseResponse.of(e.getExceptionCode(), e.getExceptionMessage());
+        return BaseResponse.of(e);
     }
 
     /**
@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
      * @return BizResponse
      */
     @ExceptionHandler(value = ConstraintViolationException.class)
-    public BaseResponse<?> handleConstraintViolationException(ConstraintViolationException e) {
+    public <T> BaseResponse<T> handleConstraintViolationException(ConstraintViolationException e) {
         StringBuilder message = new StringBuilder();
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         for (ConstraintViolation<?> violation : violations) {
@@ -61,7 +61,7 @@ public class GlobalExceptionHandler {
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         logger.error("参数校验异常(普通传参), 异常信息:{}", message);
-        return BaseResponse.of(ErrorMessage.INVALID_PARAM.getErrorCode(), message.toString());
+        return BaseResponse.of(ErrorMessage.INVALID_PARAM.getCode(), message.toString());
     }
 
     /**
@@ -71,7 +71,7 @@ public class GlobalExceptionHandler {
      * @return BizResponse
      */
     @ExceptionHandler(BindException.class)
-    public BaseResponse<?> validExceptionHandler(BindException e) {
+    public <T> BaseResponse<T> validExceptionHandler(BindException e) {
         StringBuilder message = new StringBuilder();
         List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
         for (FieldError error : fieldErrors) {
@@ -79,7 +79,7 @@ public class GlobalExceptionHandler {
         }
         message = new StringBuilder(message.substring(0, message.length() - 1));
         logger.info("参数校验异常(实体对象传参), 异常信息: {}", message);
-        return BaseResponse.of(ErrorMessage.INVALID_PARAM.getErrorCode(), message.toString());
+        return BaseResponse.of(ErrorMessage.INVALID_PARAM.getCode(), message.toString());
     }
 
     /**
@@ -89,8 +89,8 @@ public class GlobalExceptionHandler {
      * @return BizResponse
      */
     @ExceptionHandler(value = Exception.class)
-    public BaseResponse<?> handleException(Exception e) {
-        logger.error(String.format("未识别异常，异常信息: %s", e.getLocalizedMessage()), e);
+    public <T> BaseResponse<T> handleException(Exception e) {
+        logger.error("未识别异常，异常信息: " + e.getLocalizedMessage(), e);
         return BaseResponse.of(ErrorMessage.SYSTEM_ERROR);
     }
 }
