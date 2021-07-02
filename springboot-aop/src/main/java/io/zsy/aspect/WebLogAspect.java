@@ -1,11 +1,15 @@
 package io.zsy.aspect;
 
-import com.google.gson.Gson;
+import com.alibaba.fastjson.JSONObject;
 import io.zsy.annotation.WebLogAnnotation;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -13,6 +17,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 
+/**
+ * AOP 日志通知
+ *
+ * @author zhangshuaiyin
+ */
 @Aspect
 @Slf4j
 @Component
@@ -64,7 +73,7 @@ public class WebLogAspect {
         log.info("请求方式: {}", request.getMethod());
         log.info("执行方法: {}.{}", joinPoint.getSignature().getDeclaringTypeName(), joinPoint.getSignature().getName());
         log.info("请求IP: {}", request.getRemoteAddr());
-        log.info("请求参数: {}", new Gson().toJson(joinPoint.getArgs()));
+        log.info("请求参数: {}", JSONObject.toJSONString(joinPoint.getArgs()));
 
         log.info("********** 前置通知日志 END **********");
     }
