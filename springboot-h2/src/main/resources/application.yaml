@@ -1,0 +1,12 @@
+# DataSource Config
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    schema: classpath:db/schema.sql # 每次启动程序，程序都会运行schema.sql文件，对数据库的数据操作
+    data: classpath:db/data.sql # 每次启动程序，程序都会运行data.sql文件，对数据库的数据操作
+    url: jdbc:h2:mem:test # 配置h2数据库的连接地址
+    username: root
+    password: root
+  h2:
+    console:
+      enabled: true #开启web console功能
