@@ -2,6 +2,7 @@
 # 自动配置类都会绑定一个 properties 配置文件 RedisProperties
 spring:
   redis:
-    host: r-2jd987f23671ec34.redis.rds.aliyuncs.com
-    password: FL75P10Ple
+    host: 127.0.0.1
+    password: 123456
     port: 6379
+    database: 0
