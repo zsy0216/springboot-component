@@ -7,7 +7,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
@@ -16,7 +15,6 @@ import java.io.IOException;
  * @description
  * @date 2020/08/18
  */
-@Component
 public class ReadServiceImpl implements ReadService {
 
 	@Override

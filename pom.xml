@@ -15,7 +15,7 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>springboot-mail</module>
+        <module>springboot-email</module>
         <module>springboot-poi</module>
         <module>springboot-springbatch</module>
         <module>springboot-aop</module>
@@ -104,9 +104,12 @@
     <!--  公共依赖，使每个模块只需要关注特定业务所需要的依赖  -->
     <dependencies>
         <dependency>
-            <groupId>io.zsy.common</groupId>
-            <artifactId>springboot-common</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
         <!-- test scope 不能传递继承 -->
         <dependency>
