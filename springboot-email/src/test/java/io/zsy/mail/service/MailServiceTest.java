@@ -6,6 +6,7 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import javax.annotation.Resource;
+import javax.mail.MessagingException;
 
 /**
  * @author shuaiyin.zhang
@@ -27,13 +28,13 @@ public class MailServiceTest {
 	}
 
 	@Test
-	public void testSentHtmlMail() {
+	public void testSentHtmlMail() throws MessagingException {
 		Context context = new Context();
-		context.setVariable("username", "sunday");
+		context.setVariable("username", "我是张三");
 
 		String content = templateEngine.process("/mail/index", context);
 		System.out.println(content);
 
-		mailService.sendHtmlMail("springbootmail@chacuo.net", "HTML", content);
+		mailService.sendHtmlMail("springbootmail@chacuo.net", "HTML Email", content);
 	}
 }

@@ -19,7 +19,7 @@ public interface MailService {
 	 * @param content 内容
 	 * @throws MailException e
 	 */
-	void sentSimpleMail(String to, String subject, String content);
+	void sentSimpleMail(String to, String subject, String content) throws MailException;
 
 	/**
 	 * 发送 HTML 邮件
@@ -29,5 +29,5 @@ public interface MailService {
 	 * @param content 内容
 	 * @throws MessagingException e
 	 */
-	void sendHtmlMail(String to, String subject, String content);
+	void sendHtmlMail(String to, String subject, String content) throws MessagingException;
 }
