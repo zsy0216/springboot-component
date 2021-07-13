@@ -20,4 +20,9 @@ public class ShiroAppTests {
         User admin = userService.selectByUsername("admin");
         System.out.println(admin.getPassword());
     }
+
+    @Test
+    public void testRealmAuthentication() {
+
+    }
 }

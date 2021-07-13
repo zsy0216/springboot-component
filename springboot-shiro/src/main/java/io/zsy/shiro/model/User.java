@@ -1,11 +1,13 @@
 package io.zsy.shiro.model;
 
 import java.io.Serializable;
+
 import lombok.Data;
 
 /**
  * shiro_user
- * @author
+ *
+ * @author zhangshuaiyin
  */
 @Data
 public class User implements Serializable {

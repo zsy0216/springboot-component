@@ -1,5 +1,10 @@
 # SpringBoot + Shiro + Web
 
+优化参考：
+
+1. https://www.yuque.com/jiaqi.ding/reading/nt0gbc
+2. https://www.yuque.com/tangwx/wlxqwc/ruylah
+
 ## 前置准备
 
 1. 导入依赖
