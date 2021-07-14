@@ -18,9 +18,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class User extends Model<User> {
-    @TableId(type = IdType.ASSIGN_ID)
-    private Long id;
+public class Customer extends Model<Customer> {
+    @TableId(type = IdType.ASSIGN_UUID)
+    private String id;
     private String name;
     private Integer age;
     private String email;

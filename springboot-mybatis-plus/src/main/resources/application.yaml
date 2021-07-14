@@ -7,3 +7,16 @@ spring:
     url: jdbc:h2:mem:mybatisplus # 配置h2数据库的连接地址
     username: root
     password: root
+mybatis-plus:
+  mapper-locations: classpath:mappers/*.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: io.zsy.mybatis.plus.entity
+  global-config:
+    banner: true # 是否显示 mybatis-plus banner
+    db-config:
+      id-type: assign_id # 全局设置主键策略
+      table-underline: true # 驼峰下划线转换
+      #capital-mode: true  # 是否开启大写命名，默认不开启
+      # 逻辑删除配置
+      #logic-delete-value: 1
+      #logic-not-delete-value: 0
