@@ -19,8 +19,8 @@ public class KeyGeneratorTests {
      *   1. AUTO(0)：数据库ID自增，数据库必须设置自增
      *   2. NONE(1)：该类型为未设置主键类型(注解里等于跟随全局,全局里约等于 INPUT)
      *   3. INPUT(2)：用户输入ID，该类型可以通过自己注册自动填充插件进行填充
-     *   4. ASSIGN_ID(3)：雪花算法生成ID，类型为 number 或 string，插入对象ID必须为空
-     *   5. ASSIGN_UUID(4)：UUID不含中划线，类型为 string，插入对象ID必须为空(默认必须32位)
+     *   4. ASSIGN_ID(3)：雪花算法生成ID，类型为 number 或 string，插入对象ID必须为空(默认19位)
+     *   5. ASSIGN_UUID(4)：UUID不含中划线，类型为 string，插入对象ID必须为空(默认32位)
      */
 
     /**
