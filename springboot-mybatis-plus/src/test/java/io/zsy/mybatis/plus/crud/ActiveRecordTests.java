@@ -1,9 +1,7 @@
 package io.zsy.mybatis.plus.crud;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
-import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.zsy.mybatis.plus.entity.User;
 import org.junit.jupiter.api.Test;
@@ -11,6 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * 测试 Mybatis Plus ActiveRecord 模式下增删改查操作
+ *
+ * 直接通过实体来实现增删改查操作
+ * 1. 实体类需要继承 Model<T>
+ * 2. 需要定义 mapper 接口实现 BaseMapper
  *
  * @author zhangshuaiyin
  * @date 2021-07-14 09:52
