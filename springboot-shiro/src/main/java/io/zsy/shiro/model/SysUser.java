@@ -1,35 +1,36 @@
 package io.zsy.shiro.model;
 
-import java.io.Serializable;
-
+import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
- * shiro_user
+ * sys_user
  *
  * @author zhangshuaiyin
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
-public class User implements Serializable {
+public class SysUser extends Model<SysUser> {
     /**
-     * id
+     * 用户ID
      */
     private Integer id;
 
     /**
-     * username
+     * 账号
      */
     private String username;
 
     /**
-     * password
+     * 密码
      */
     private String password;
 
     /**
-     * 授权
+     * 盐值
      */
-    private String perms;
+    private String salt;
 
     private static final long serialVersionUID = 1L;
 }

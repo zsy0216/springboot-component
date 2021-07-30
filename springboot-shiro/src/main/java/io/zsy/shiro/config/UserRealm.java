@@ -1,7 +1,7 @@
 package io.zsy.shiro.config;
 
-import io.zsy.shiro.model.User;
-import io.zsy.shiro.service.UserService;
+import io.zsy.shiro.model.SysUser;
+import io.zsy.shiro.service.SysUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -25,7 +25,7 @@ import java.util.Objects;
 @Slf4j
 public class UserRealm extends AuthorizingRealm {
     @Autowired
-    UserService userService;
+    SysUserService userService;
 
     // 授权
     @Override
@@ -36,9 +36,10 @@ public class UserRealm extends AuthorizingRealm {
 
         // 获取登陆用户信息
         Subject subject = SecurityUtils.getSubject();
-        User user = (User) subject.getPrincipal();
+        SysUser user = (SysUser) subject.getPrincipal();
         // 设置权限
-        info.addStringPermission(user.getPerms());
+        // info.addStringPermission(user.getPerms());
+        info.addStringPermission("root");
         // 设置多个权限 info.setStringPermissions();
         return info;
     }
@@ -52,7 +53,7 @@ public class UserRealm extends AuthorizingRealm {
         // String password = "123456";
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         // 查询数据库
-        User user = userService.selectByUsername(token.getUsername());
+        SysUser user = userService.selectByUsername(token.getUsername());
         // 判断用户名
         if (Objects.isNull(user)) {
             return null; // 抛出异常 UnknownAccountException

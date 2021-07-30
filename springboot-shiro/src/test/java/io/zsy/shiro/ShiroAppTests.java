@@ -1,7 +1,7 @@
 package io.zsy.shiro;
 
-import io.zsy.shiro.model.User;
-import io.zsy.shiro.service.UserService;
+import io.zsy.shiro.model.SysUser;
+import io.zsy.shiro.service.SysUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -13,11 +13,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class ShiroAppTests {
     @Autowired
-    UserService userService;
+    SysUserService userService;
 
     @Test
     public void context() {
-        User admin = userService.selectByUsername("admin");
+        SysUser admin = userService.selectByUsername("root");
         System.out.println(admin.getPassword());
     }
 

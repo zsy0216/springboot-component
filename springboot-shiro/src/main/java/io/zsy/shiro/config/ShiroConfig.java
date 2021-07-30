@@ -22,6 +22,7 @@ public class ShiroConfig {
     // ShiroFilterFactoryBean
     @Bean
     public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
+        log.info("shiro request filter");
         ShiroFilterFactoryBean shiroFilterBean = new ShiroFilterFactoryBean();
         // 关联 DefaultWebSecurityManager
         shiroFilterBean.setSecurityManager(securityManager);
@@ -43,7 +44,8 @@ public class ShiroConfig {
         filterMap.put("/user/add", "perms[user:add]");
         filterMap.put("/user/update", "perms[user:update]");
 
-        filterMap.put("/user/*", "authc"); // 认证写在授权下面
+        // filterMap.put("/user/*", "authc"); // 认证写在授权下面
+        filterMap.put("/**", "authc"); // 认证写在授权下面
         shiroFilterBean.setFilterChainDefinitionMap(filterMap);
 
         // 设置登录请求地址
@@ -58,6 +60,7 @@ public class ShiroConfig {
     // DefaultWebSecurityManager
     @Bean
     public DefaultWebSecurityManager securityManager(@Qualifier("userRealm") Realm userRealm) {
+        log.info("security manager");
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 关联 realm
         securityManager.setRealm(userRealm);
@@ -67,6 +70,7 @@ public class ShiroConfig {
     // 创建 Realm 对象, 需要实现Realm类型的类
     @Bean
     public Realm userRealm() {
+        log.info("get user realm");
         return new UserRealm();
     }
 
