@@ -51,7 +51,10 @@ public class HelloController {
             // 执行登录操作
             subject.login(token);
             return "index";
-        } catch (UnknownAccountException e) {
+        }
+        // 对于页面的错误消息展示，最好使用如 “用户名 / 密码错误” 而不是 “用户名错误”/“密码错误”，防止一些恶意用户非法扫描帐号库
+        // 即在这里只捕获 AuthenticationException
+        catch (UnknownAccountException e) {
             model.addAttribute("msg", "用户名错误");
             return "login";
         } catch (IncorrectCredentialsException e) {

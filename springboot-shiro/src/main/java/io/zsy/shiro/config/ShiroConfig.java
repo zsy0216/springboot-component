@@ -19,13 +19,17 @@ import java.util.Map;
 @Slf4j
 @Configuration
 public class ShiroConfig {
-    // ShiroFilterFactoryBean
+    /**
+     * Shiro 过滤器
+     *
+     * @return
+     */
     @Bean
-    public ShiroFilterFactoryBean shiroFilterFactoryBean(@Qualifier("securityManager") DefaultWebSecurityManager securityManager) {
+    public ShiroFilterFactoryBean shiroFilterFactoryBean() {
         log.info("shiro request filter");
         ShiroFilterFactoryBean shiroFilterBean = new ShiroFilterFactoryBean();
         // 关联 DefaultWebSecurityManager
-        shiroFilterBean.setSecurityManager(securityManager);
+        shiroFilterBean.setSecurityManager(securityManager());
 
         // 添加 shiro 的内置过滤器
         /*
@@ -44,8 +48,8 @@ public class ShiroConfig {
         filterMap.put("/user/add", "perms[user:add]");
         filterMap.put("/user/update", "perms[user:update]");
 
-        // filterMap.put("/user/*", "authc"); // 认证写在授权下面
-        filterMap.put("/**", "authc"); // 认证写在授权下面
+        // 认证写在授权下面
+        filterMap.put("/**", "authc");
         shiroFilterBean.setFilterChainDefinitionMap(filterMap);
 
         // 设置登录请求地址
@@ -57,17 +61,25 @@ public class ShiroConfig {
         return shiroFilterBean;
     }
 
-    // DefaultWebSecurityManager
+    /**
+     * securityManager
+     *
+     * @return securityManager
+     */
     @Bean
-    public DefaultWebSecurityManager securityManager(@Qualifier("userRealm") Realm userRealm) {
+    public DefaultWebSecurityManager securityManager() {
         log.info("security manager");
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         // 关联 realm
-        securityManager.setRealm(userRealm);
+        securityManager.setRealm(userRealm());
         return securityManager;
     }
 
-    // 创建 Realm 对象, 需要实现Realm类型的类
+    /**
+     * Realm
+     *
+     * @return Realm
+     */
     @Bean
     public Realm userRealm() {
         log.info("get user realm");
