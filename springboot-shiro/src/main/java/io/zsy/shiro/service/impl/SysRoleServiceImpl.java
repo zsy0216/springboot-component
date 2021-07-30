@@ -1,0 +1,15 @@
+package io.zsy.shiro.service.impl;
+
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.zsy.shiro.mapper.SysRoleMapper;
+import io.zsy.shiro.model.SysRole;
+import io.zsy.shiro.service.SysRoleService;
+import org.springframework.stereotype.Service;
+
+/**
+ * @author zhangshuaiyin
+ * @date 2021-07-30 16:38
+ */
+@Service
+public class SysRoleServiceImpl extends ServiceImpl<SysRoleMapper, SysRole> implements SysRoleService {
+}

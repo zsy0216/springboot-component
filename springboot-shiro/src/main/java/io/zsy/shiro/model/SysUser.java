@@ -15,7 +15,7 @@ public class SysUser extends Model<SysUser> {
     /**
      * 用户ID
      */
-    private Integer id;
+    private Integer userId;
 
     /**
      * 账号
