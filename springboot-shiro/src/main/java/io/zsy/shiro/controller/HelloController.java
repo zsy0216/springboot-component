@@ -23,6 +23,7 @@ public class HelloController {
         model.addAttribute("msg", "World");
         return "index";
     }
+
     @RequestMapping({"/401.html",})
     public String toUnAuth(Model model) {
         return "401";
@@ -69,7 +70,9 @@ public class HelloController {
     public String logout() {
         // 获取当前用户
         Subject subject = SecurityUtils.getSubject();
-        subject.logout();
+        if (subject != null) {
+            subject.logout();
+        }
         return "login";
     }
 }
