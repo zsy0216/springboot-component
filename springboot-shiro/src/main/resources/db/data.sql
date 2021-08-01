@@ -1,6 +1,6 @@
 DELETE FROM sys_user;
 INSERT INTO sys_user VALUES
-(1, 'root', '123456', NULL),
+(1, 'root', 'ac9e5a212f96f614bd2f07e292a78bc4f144dd3e', '97b189201c85cd7994fbb5f04814f110'),
 (2, 'test', '123456', NULL);
 
 DELETE FROM sys_role;
