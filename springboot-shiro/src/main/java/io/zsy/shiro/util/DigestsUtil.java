@@ -34,7 +34,6 @@ public class DigestsUtil {
         return randomNumberGenerator.nextBytes().toHex();
     }
 
-
     /**
      * @param
      * @return

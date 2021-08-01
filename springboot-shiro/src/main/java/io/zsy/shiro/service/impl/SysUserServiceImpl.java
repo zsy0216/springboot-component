@@ -2,10 +2,23 @@ package io.zsy.shiro.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import io.zsy.shiro.mapper.SysPermissionMapper;
+import io.zsy.shiro.mapper.SysRoleMapper;
+import io.zsy.shiro.mapper.SysRolePermissionMapper;
 import io.zsy.shiro.mapper.SysUserMapper;
+import io.zsy.shiro.mapper.SysUserRoleMapper;
+import io.zsy.shiro.model.SysPermission;
+import io.zsy.shiro.model.SysRole;
+import io.zsy.shiro.model.SysRolePermission;
 import io.zsy.shiro.model.SysUser;
+import io.zsy.shiro.model.SysUserRole;
+import io.zsy.shiro.service.SysUserRoleService;
 import io.zsy.shiro.service.SysUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author: zhangshuaiyin
@@ -13,8 +26,42 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
+
+    @Autowired
+    SysUserRoleService userRoleService;
+    @Autowired
+    SysRoleMapper roleMapper;
+    @Autowired
+    SysRolePermissionMapper rolePermissionMapper;
+    @Autowired
+    SysPermissionMapper permissionMapper;
+
     @Override
     public SysUser selectByUsername(String username) {
-        return baseMapper.selectOne(new QueryWrapper<SysUser>().eq("username", username));
+        return lambdaQuery().eq(SysUser::getUsername, username).one();
+    }
+
+    @Override
+    public List<String> selectRoles(SysUser sysUser) {
+        List<SysRole> roles = getRoles(sysUser);
+        return roles.stream().map(SysRole::getRoleName).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<String> selectPermissions(SysUser sysUser) {
+        List<SysRole> roles = getRoles(sysUser);
+        List<SysRolePermission> rolePermissions = rolePermissionMapper.selectList(
+                new QueryWrapper<SysRolePermission>().in("role_id", roles.stream().map(SysRole::getRoleId).collect(Collectors.toList())));
+        List<Integer> idList = rolePermissions.stream().map(SysRolePermission::getPermissionId).collect(Collectors.toList());
+        List<SysPermission> permissions = permissionMapper.selectList(
+                new QueryWrapper<SysPermission>().in("permission_id", idList)
+        );
+        return permissions.stream().map(SysPermission::getPermissionName).collect(Collectors.toList());
+    }
+
+    private List<SysRole> getRoles(SysUser sysUser) {
+        List<SysUserRole> userRoles = userRoleService.selectUserRoles(sysUser.getUserId());
+        List<Integer> idList = userRoles.stream().map(SysUserRole::getRoleId).collect(Collectors.toList());
+        return roleMapper.selectList(new QueryWrapper<SysRole>().in("role_id", idList));
     }
 }

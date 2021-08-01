@@ -17,5 +17,23 @@
 <div shiro:hasPermission="user:update">
   <a th:href="@{/user/update}"> update </a>
 </div>
+
+<div shiro:hasRole="admin">
+  Admin 角色可见
+</div>
+
+<div shiro:hasRole="root">
+  Root 角色可见
+</div>
+
+<div shiro:hasRole="guest">
+  Guest 角色可见
+</div>
+
+<br>
+<hr>
+
+<a th:href="@{/logout}">退出</a>
+
 </body>
 </html>

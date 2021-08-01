@@ -1,7 +1,7 @@
 DELETE FROM sys_user;
 INSERT INTO sys_user VALUES
 (1, 'root', 'ac9e5a212f96f614bd2f07e292a78bc4f144dd3e', '97b189201c85cd7994fbb5f04814f110'),
-(2, 'test', '123456', NULL);
+(2, 'test', 'ac9e5a212f96f614bd2f07e292a78bc4f144dd3e', '97b189201c85cd7994fbb5f04814f110');
 
 DELETE FROM sys_role;
 INSERT INTO sys_role VALUES
@@ -11,9 +11,9 @@ INSERT INTO sys_role VALUES
 
 DELETE FROM sys_permission;
 INSERT INTO sys_permission VALUES
-(1, 'user:add', 'add'),
+(1, 'system:view', 'view'),
 (2, 'user:update', 'update'),
-(3, 'system:view', 'view');
+(3, 'user:add', 'add');
 
 DELETE FROM sys_user_role;
 INSERT INTO sys_user_role VALUES
@@ -29,4 +29,5 @@ INSERT INTO sys_role_permission VALUES
 (2, 1),
 (2, 2),
 (2, 3),
-(3, 1);
+(3, 1),
+(3, 2);

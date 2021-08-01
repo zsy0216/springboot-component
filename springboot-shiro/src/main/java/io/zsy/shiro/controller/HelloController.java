@@ -7,6 +7,8 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -61,5 +63,13 @@ public class HelloController {
             model.addAttribute("msg", "密码错误");
             return "login";
         }
+    }
+
+    @GetMapping("/logout")
+    public String logout() {
+        // 获取当前用户
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "login";
     }
 }

@@ -37,18 +37,18 @@ public class ShiroConfig {
          authc: 必须认证之后才能访问
          user: 必须拥有记住我功能才能访问
          perms: 拥有某个资源权限才能访问
-         role: 拥有某个角色权限才能访问
+         roles: 拥有某个角色权限才能访问
          */
         Map<String, String> filterMap = new LinkedHashMap<>();
 
-        // filterMap.put("/user/add", "authc");
-        // filterMap.put("/user/update", "authc");
+        // 给请求设置权限/角色
+        // 角色设置要在权限之前
+        filterMap.put("/user/**", "roles[admin]");
 
-        // 给请求设置权限
         filterMap.put("/user/add", "perms[user:add]");
         filterMap.put("/user/update", "perms[user:update]");
 
-        // 认证写在授权下面
+        // 认证请求写在授权下面
         filterMap.put("/**", "authc");
         shiroFilterBean.setFilterChainDefinitionMap(filterMap);
 

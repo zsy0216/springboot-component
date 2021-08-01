@@ -31,6 +31,6 @@ role_id int(11) NOT NULL COMMENT '角色ID'
 
 DROP TABLE IF EXISTS sys_role_permission;
 CREATE TABLE sys_role_permission (
-permission_id int(11) NOT NULL COMMENT '权限ID',
-role_id int(11) NOT NULL COMMENT '角色ID'
+role_id int(11) NOT NULL COMMENT '角色ID',
+permission_id int(11) NOT NULL COMMENT '权限ID'
 )
