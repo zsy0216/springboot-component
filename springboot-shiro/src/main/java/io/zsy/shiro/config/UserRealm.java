@@ -19,6 +19,7 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
 import java.util.List;
 import java.util.Objects;
 
@@ -32,10 +33,11 @@ public class UserRealm extends AuthorizingRealm {
     SysUserService userService;
 
     /**
-     * 构造函数，指定密码匹配方式等
+     * 指定密码匹配器等, 可自定义实现CredentialsMatcher接口
      */
-    public UserRealm() {
-        // 指定密码匹配方式为sha1
+    @PostConstruct
+    public void initCredentialsMatcher() {
+        // 指定密码加密 hash 算法为sha1
         HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(DigestsUtil.SHA1);
         // 指定密码迭代次数
         matcher.setHashIterations(DigestsUtil.ITERATIONS);

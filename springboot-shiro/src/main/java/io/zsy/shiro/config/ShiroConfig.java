@@ -3,11 +3,17 @@ package io.zsy.shiro.config;
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.realm.Realm;
+import org.apache.shiro.spring.LifecycleBeanPostProcessor;
+import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.apache.shiro.web.servlet.SimpleCookie;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -62,7 +68,7 @@ public class ShiroConfig {
     }
 
     /**
-     * securityManager
+     * securityManager 权限管理器
      *
      * @return securityManager
      */
@@ -70,8 +76,11 @@ public class ShiroConfig {
     public DefaultWebSecurityManager securityManager() {
         log.info("security manager");
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
-        // 关联 realm
+        // 管理 realm
         securityManager.setRealm(userRealm());
+        // 管理 session 会话
+        securityManager.setSessionManager(sessionManager());
+
         return securityManager;
     }
 
@@ -87,12 +96,74 @@ public class ShiroConfig {
     }
 
     /**
-     * ShiroDialect，为了在thymeleaf里使用shiro的标签的bean
+     * ShiroDialect：配置后可以在thymeleaf里使用shiro的标签进行鉴权
      *
      * @return ShiroDialect
      */
     @Bean
     public ShiroDialect shiroDialect() {
         return new ShiroDialect();
+    }
+
+    /**
+     * 创建 Cookie 对象
+     *
+     * @return
+     */
+    @Bean
+    public SimpleCookie simpleCookie() {
+        SimpleCookie simpleCookie = new SimpleCookie();
+        simpleCookie.setName("springboot-shiro-session");
+        return simpleCookie;
+    }
+
+    /**
+     * 会话管理器
+     *
+     * @return
+     */
+    @Bean
+    public DefaultWebSessionManager sessionManager() {
+        DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
+        // 关闭会话更新
+        sessionManager.setSessionValidationSchedulerEnabled(false);
+        // 设置 cookie 生效
+        sessionManager.setSessionIdCookieEnabled(true);
+        // 指定 cookie 生成策略
+        sessionManager.setSessionIdCookie(simpleCookie());
+        // 全局 session 超时时间 1h
+        sessionManager.setGlobalSessionTimeout(3600000);
+        return sessionManager;
+    }
+
+    /**
+     * 保证实现了Shiro内部lifecycle函数的bean执行
+     *
+     * @return
+     */
+    @Bean
+    public static LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+        return new LifecycleBeanPostProcessor();
+    }
+
+    /**
+     * AOP式方法级权限检查
+     */
+    @Bean
+    @DependsOn("lifecycleBeanPostProcessor")
+    public DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator() {
+        DefaultAdvisorAutoProxyCreator defaultAdvisorAutoProxyCreator = new DefaultAdvisorAutoProxyCreator();
+        defaultAdvisorAutoProxyCreator.setProxyTargetClass(true);
+        return defaultAdvisorAutoProxyCreator;
+    }
+
+    /**
+     * 配合DefaultAdvisorAutoProxyCreator事项注解权限校验
+     */
+    @Bean
+    public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
+        AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
+        advisor.setSecurityManager(securityManager());
+        return advisor;
     }
 }
