@@ -2,6 +2,9 @@ package io.zsy.shiro.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.cache.Cache;
+import org.apache.shiro.cache.CacheException;
+import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -10,11 +13,11 @@ import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -81,11 +84,13 @@ public class ShiroConfig {
         // 管理 session 会话
         securityManager.setSessionManager(sessionManager());
 
+        securityManager.setCacheManager(cacheManager());
+
         return securityManager;
     }
 
     /**
-     * Realm
+     * Realm 身份认证授权
      *
      * @return Realm
      */
@@ -103,6 +108,20 @@ public class ShiroConfig {
     @Bean
     public ShiroDialect shiroDialect() {
         return new ShiroDialect();
+    }
+
+    /**
+     * TODO 缓存管理器
+     *
+     * @return
+     */
+    public CacheManager cacheManager() {
+        return new CacheManager() {
+            @Override
+            public <K, V> Cache<K, V> getCache(String s) throws CacheException {
+                return null;
+            }
+        };
     }
 
     /**
@@ -158,7 +177,9 @@ public class ShiroConfig {
     }
 
     /**
-     * 配合DefaultAdvisorAutoProxyCreator事项注解权限校验
+     * 开启shiro aop注解支持. 配合DefaultAdvisorAutoProxyCreator事项注解权限校验
+     *
+     * @return org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor
      */
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor() {
