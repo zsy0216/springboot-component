@@ -11,9 +11,9 @@ INSERT INTO sys_role VALUES
 
 DELETE FROM sys_permission;
 INSERT INTO sys_permission VALUES
-(1, 'view:user', 'view'),
-(2, 'add:user', 'add'),
-(3, 'update:user', 'update');
+(1, 'user:add', 'add'),
+(2, 'user:update', 'update'),
+(3, 'system:view', 'view');
 
 DELETE FROM sys_user_role;
 INSERT INTO sys_user_role VALUES

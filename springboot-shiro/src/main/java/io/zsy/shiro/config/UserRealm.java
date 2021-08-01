@@ -39,7 +39,7 @@ public class UserRealm extends AuthorizingRealm {
         SysUser user = (SysUser) subject.getPrincipal();
         // 设置权限
         // info.addStringPermission(user.getPerms());
-        info.addStringPermission("root");
+        info.addStringPermission("user:add");
         // 设置多个权限 info.setStringPermissions();
         return info;
     }
@@ -48,17 +48,15 @@ public class UserRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
         log.info("执行认证~~~");
-        // 伪造用户数据
-        // String username = "root";
-        // String password = "123456";
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
         // 查询数据库
         SysUser user = userService.selectByUsername(token.getUsername());
         // 判断用户名
         if (Objects.isNull(user)) {
-            return null; // 抛出异常 UnknownAccountException
+            // 如果返回 AuthenticationInfo 为空 会抛出异常 UnknownAccountException，表示用户名信息错误
+            return null;
         }
-        // shiro 进行密码认证
+        // shiro 进行密码认证, 第一个参数 principal 授权时可以从 Subject 对象中得到
         return new SimpleAuthenticationInfo(user, user.getPassword(), "");
     }
 }
