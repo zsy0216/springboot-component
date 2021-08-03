@@ -96,7 +96,7 @@ public class RedisConfig {
                         .entryTtl(Duration.ofDays(1));
         // 加入白名单   https://github.com/alibaba/fastjson/wiki/enable_autotype
         ParserConfig.getGlobalInstance().addAccept("com.zsy");
-        ParserConfig.getGlobalInstance().addAccept("com.baomidou");
+        ParserConfig.getGlobalInstance().addAccept("com.zsy");
         return RedisCacheManager.builder(factory).cacheDefaults(redisCacheConfiguration).build();
     }
 

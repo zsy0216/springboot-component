@@ -1,5 +1,6 @@
 package io.zsy.template;
 
+import com.alibaba.fastjson.JSON;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -62,7 +63,7 @@ public class ValueOperationsTests {
 
         // 5. 设置 k 对应 v 为在 offset 位置的值？
         // \xa2VALUE_BOOT_TEST_VALUE_OPERATIONS
-        redisTemplate.opsForValue().setBit(key, 0, true);
+        // redisTemplate.opsForValue().setBit(key, 0, true);
     }
 
     /**
@@ -130,7 +131,7 @@ public class ValueOperationsTests {
     @Test
     public void testOther() {
         // 将一个value附加到 key 对应的value后面 。
-        redisTemplate.opsForValue().append(key, "_append");
+        redisTemplate.opsForValue().append(key, JSON.toJSONString("_append"));
 
         // 获取 value 的大小 B
         Long size = redisTemplate.opsForValue().size(key);
