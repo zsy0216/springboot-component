@@ -1,6 +1,7 @@
 package io.zsy.shiro.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import io.zsy.shiro.filter.AnyRolesAuthorizationFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
@@ -17,7 +18,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
 
-import java.util.Collection;
+import javax.servlet.Filter;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -40,6 +42,11 @@ public class ShiroConfig {
         // 关联 DefaultWebSecurityManager
         shiroFilterBean.setSecurityManager(securityManager());
 
+        // 添加自定义的过滤器
+        Map<String, Filter> map = new HashMap<>();
+        map.put("any-roles", new AnyRolesAuthorizationFilter());
+        shiroFilterBean.setFilters(map);
+
         // 添加 shiro 的内置过滤器
         /*
          anon: 无需认证即可访问
@@ -52,7 +59,11 @@ public class ShiroConfig {
 
         // 给请求设置权限/角色
         // 角色设置要在权限之前
-        filterMap.put("/user/**", "roles[admin]");
+        // 使用自定义角色过滤器
+        filterMap.put("/user/**", "any-roles[admin, guest]");
+
+        // 默认的角色过滤器
+        // filterMap.put("/user/**", "roles[admin, guest]");
 
         filterMap.put("/user/add", "perms[user:add]");
         filterMap.put("/user/update", "perms[user:update]");
@@ -83,7 +94,7 @@ public class ShiroConfig {
         securityManager.setRealm(userRealm());
         // 管理 session 会话
         securityManager.setSessionManager(sessionManager());
-
+        // 缓存管理器
         securityManager.setCacheManager(cacheManager());
 
         return securityManager;
