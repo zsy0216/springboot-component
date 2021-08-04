@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serializable;
+
 /**
  * sys_user
  *
@@ -11,7 +13,7 @@ import lombok.EqualsAndHashCode;
  */
 @EqualsAndHashCode(callSuper = true)
 @Data
-public class SysUser extends Model<SysUser> {
+public class SysUser extends Model<SysUser> implements Serializable {
     /**
      * 用户ID
      */

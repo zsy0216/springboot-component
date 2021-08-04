@@ -1,11 +1,11 @@
-package io.zsy.config;
+package io.zsy.shiro.config;
 
-import com.alibaba.fastjson.parser.ParserConfig;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,7 +23,6 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import java.lang.reflect.Method;
 import java.time.Duration;
 
 /**
@@ -34,6 +33,7 @@ import java.time.Duration;
  * @author zhangshuaiyin
  * @date 2021-06-29 16:26
  */
+@EnableCaching
 @Configuration
 public class RedisConfig extends CachingConfigurerSupport {
     /**
@@ -98,8 +98,6 @@ public class RedisConfig extends CachingConfigurerSupport {
                         //配置注解默认的过期时间
                         .entryTtl(Duration.ofDays(1));
         // 加入白名单   https://github.com/alibaba/fastjson/wiki/enable_autotype
-        ParserConfig.getGlobalInstance().addAccept("com.zsy");
-        ParserConfig.getGlobalInstance().addAccept("com.zsy");
         return RedisCacheManager.builder(factory).cacheDefaults(redisCacheConfiguration).build();
     }
 
