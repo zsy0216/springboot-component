@@ -24,6 +24,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
+ * Shiro 配置类
+ *
  * @author: zhangshuaiyin
  * @date: 2021/5/30 9:51
  */

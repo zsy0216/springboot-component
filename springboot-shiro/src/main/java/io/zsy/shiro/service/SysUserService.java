@@ -33,4 +33,11 @@ public interface SysUserService extends IService<SysUser> {
      * @return
      */
     List<String> selectPermissions(SysUser sysUser);
+
+    /**
+     * 登录成功添加用户缓存
+     *
+     * @param sysUser
+     */
+    void cacheUser(SysUser sysUser);
 }

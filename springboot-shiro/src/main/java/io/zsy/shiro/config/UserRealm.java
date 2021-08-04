@@ -18,6 +18,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 
 import javax.annotation.PostConstruct;
 import java.util.List;
@@ -30,6 +31,7 @@ import java.util.Objects;
 @Slf4j
 public class UserRealm extends AuthorizingRealm {
     @Autowired
+    @Lazy
     SysUserService userService;
 
     /**
