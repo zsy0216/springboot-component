@@ -98,7 +98,7 @@ public class ShiroConfig {
         // 管理 session 会话
         securityManager.setSessionManager(sessionManager());
         // 缓存管理器
-        // securityManager.setCacheManager(cacheManager());
+        securityManager.setCacheManager(cacheManager());
 
         return securityManager;
     }
@@ -112,13 +112,7 @@ public class ShiroConfig {
     public Realm userRealm() {
         log.info("get user realm");
         UserRealm realm = new UserRealm();
-        //开启缓存管理
-        realm.setCacheManager(cacheManager());
-        realm.setCachingEnabled(true);
-        realm.setAuthenticationCachingEnabled(true);
-        realm.setAuthenticationCacheName("authenticationCache");
-        realm.setAuthorizationCachingEnabled(true);
-        realm.setAuthorizationCacheName("authorizationCache");
+        // realm.setCacheManager(cacheManager());
         return realm;
     }
 
@@ -141,9 +135,8 @@ public class ShiroConfig {
     public CacheManager cacheManager() {
         log.info("配置缓存管理器");
         // return ehCacheManager();
-        // return redisCacheManager();
+        return redisCacheManager();
         // return new MemoryConstrainedCacheManager();
-        return new io.zsy.shiro.cache.RedisCacheManager();
     }
 
     /**
@@ -151,43 +144,43 @@ public class ShiroConfig {
      *
      * @return
      */
-    // @Bean
-    // public RedisManager redisManager() {
-    //     RedisManager redisManager = new RedisManager();
-    //     redisManager.setHost("127.0.0.1");
-    //     redisManager.setPort(6379);
-    //     redisManager.setPassword("123456");
-    //     return redisManager;
-    // }
+    @Bean
+    public RedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost("127.0.0.1");
+        redisManager.setPort(6379);
+        redisManager.setPassword("123456");
+        return redisManager;
+    }
 
     /**
      * Redis 缓存管理器
      *
      * @return
      */
-    // @Bean
-    // public RedisCacheManager redisCacheManager() {
-    //     RedisCacheManager redisCacheManager = new RedisCacheManager();
-    //     redisCacheManager.setRedisManager(redisManager());
-    //     //redis中针对不同用户缓存
-    //     redisCacheManager.setPrincipalIdFieldName("username");
-    //     //用户权限信息缓存时间
-    //     redisCacheManager.setExpire(200000);
-    //     return redisCacheManager;
-    // }
+    @Bean
+    public RedisCacheManager redisCacheManager() {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(redisManager());
+        //redis中针对不同用户缓存
+        redisCacheManager.setPrincipalIdFieldName("username");
+        //用户权限信息缓存时间
+        redisCacheManager.setExpire(200000);
+        return redisCacheManager;
+    }
 
     /**
      * EhCache 缓存管理器
      *
      * @return
      */
-    // @Bean
-    // public EhCacheManager ehCacheManager() {
-    //     log.info("ehcache 缓存管理器");
-    //     EhCacheManager cacheManager = new EhCacheManager();
-    //     cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
-    //     return cacheManager;
-    // }
+    @Bean
+    public EhCacheManager ehCacheManager() {
+        log.info("ehcache 缓存管理器");
+        EhCacheManager cacheManager = new EhCacheManager();
+        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
+        return cacheManager;
+    }
 
     /**
      * 创建 Cookie 对象
