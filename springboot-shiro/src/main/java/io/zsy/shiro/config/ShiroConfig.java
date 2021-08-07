@@ -1,6 +1,7 @@
 package io.zsy.shiro.config;
 
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
+import io.zsy.shiro.cache.RedisShiroCacheManager;
 import io.zsy.shiro.filter.AnyRolesAuthorizationFilter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.cache.CacheManager;
@@ -137,8 +138,8 @@ public class ShiroConfig {
         // return ehCacheManager();
         return redisCacheManager();
         // return new MemoryConstrainedCacheManager();
+        // return new RedisShiroCacheManager();
     }
-
 
     /**
      * Redis 管理
