@@ -3,9 +3,8 @@ package io.zsy.shiro.config;
 import at.pollux.thymeleaf.shiro.dialect.ShiroDialect;
 import io.zsy.shiro.filter.AnyRolesAuthorizationFilter;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.cache.Cache;
-import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.cache.CacheManager;
+import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
@@ -13,6 +12,8 @@ import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
+import org.crazycake.shiro.RedisCacheManager;
+import org.crazycake.shiro.RedisManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -110,7 +111,9 @@ public class ShiroConfig {
     @Bean
     public Realm userRealm() {
         log.info("get user realm");
-        return new UserRealm();
+        UserRealm realm = new UserRealm();
+        // realm.setCacheManager(cacheManager());
+        return realm;
     }
 
     /**
@@ -124,17 +127,60 @@ public class ShiroConfig {
     }
 
     /**
-     * TODO 缓存管理器
+     * 缓存管理器，可配置EhCache 或 Redis 或内存
      *
      * @return
      */
+    @Bean
     public CacheManager cacheManager() {
-        return new CacheManager() {
-            @Override
-            public <K, V> Cache<K, V> getCache(String s) throws CacheException {
-                return null;
-            }
-        };
+        log.info("配置缓存管理器");
+        // return ehCacheManager();
+        return redisCacheManager();
+        // return new MemoryConstrainedCacheManager();
+    }
+
+
+    /**
+     * Redis 管理
+     *
+     * @return
+     */
+    @Bean
+    public RedisManager redisManager() {
+        RedisManager redisManager = new RedisManager();
+        redisManager.setHost("127.0.0.1");
+        redisManager.setPort(6379);
+        redisManager.setPassword("123456");
+        return redisManager;
+    }
+
+    /**
+     * Redis 缓存管理器
+     *
+     * @return
+     */
+    @Bean
+    public RedisCacheManager redisCacheManager() {
+        RedisCacheManager redisCacheManager = new RedisCacheManager();
+        redisCacheManager.setRedisManager(redisManager());
+        //redis中针对不同用户缓存
+        redisCacheManager.setPrincipalIdFieldName("username");
+        //用户权限信息缓存时间
+        redisCacheManager.setExpire(200000);
+        return redisCacheManager;
+    }
+
+    /**
+     * EhCache 缓存管理器
+     *
+     * @return
+     */
+    @Bean
+    public EhCacheManager ehCacheManager() {
+        log.info("ehcache 缓存管理器");
+        EhCacheManager cacheManager = new EhCacheManager();
+        cacheManager.setCacheManagerConfigFile("classpath:ehcache.xml");
+        return cacheManager;
     }
 
     /**

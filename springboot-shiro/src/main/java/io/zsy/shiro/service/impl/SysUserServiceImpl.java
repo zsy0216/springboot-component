@@ -15,8 +15,6 @@ import io.zsy.shiro.service.SysUserRoleService;
 import io.zsy.shiro.service.SysUserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheConfig;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +24,6 @@ import java.util.stream.Collectors;
  * @author: zhangshuaiyin
  * @date: 2021/5/30 20:43
  */
-@CacheConfig(cacheNames = "user")
 @Log4j2
 @Service
 public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> implements SysUserService {
@@ -40,24 +37,22 @@ public class SysUserServiceImpl extends ServiceImpl<SysUserMapper, SysUser> impl
     @Autowired
     SysPermissionMapper permissionMapper;
 
-    @Cacheable(value = "username")
     @Override
     public SysUser selectByUsername(String username) {
-        log.info("查询数据库");
+        log.info("selectByUsername - 查询数据库");
         return lambdaQuery().eq(SysUser::getUsername, username).one();
     }
 
-    /**
-     * TODO 角色、权限获取缓存
-     */
     @Override
     public List<String> selectRoles(SysUser sysUser) {
+        log.info("selectRoles - 查询数据库");
         List<SysRole> roles = getRoles(sysUser);
         return roles.stream().map(SysRole::getRoleName).collect(Collectors.toList());
     }
 
     @Override
     public List<String> selectPermissions(SysUser sysUser) {
+        log.info("selectPermissions - 查询数据库");
         List<SysRole> roles = getRoles(sysUser);
         List<SysRolePermission> rolePermissions = rolePermissionMapper.selectList(
                 new QueryWrapper<SysRolePermission>().in("role_id", roles.stream().map(SysRole::getRoleId).collect(Collectors.toList())));
