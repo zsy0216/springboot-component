@@ -11,9 +11,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class QiNiuUploadTests {
 
-    public String accessKey = "3_IaBO18YeMbRnCGEQ_5zRurMtdfZcrLK_W1eFq4";
-    public String secretKey = "q0Fb8YYdqNJwtfoMr0n21oeri6xWgSHf-8sCMVY7";
-    public String bucket = "boot-oss";
+    public String accessKey = "";
+    public String secretKey = "";
+    public String bucket = "";
 
     @Test
     public void testUpload() {

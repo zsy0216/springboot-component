@@ -1,3 +1,11 @@
 spring:
   application:
     name: boot-oss
+
+#七牛云配置
+qiniu:
+  AccessKey:
+  SecretKey:
+  # 七牛空间名
+  Bucket: boot-oss
+  BucketUrl:
