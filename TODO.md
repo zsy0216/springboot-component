@@ -23,6 +23,7 @@
 - [x] poi: 整合 POI 实现 Excel 操作
 - [x] http: 整合 okhttps-fastjson 完成网络请求使用
 - [ ] message: 整合短信
+- [ ] oss: 整合七牛云、阿里云对象存储服务，完成文件上传等功能
 
 - [ ] ：社交登录
 
