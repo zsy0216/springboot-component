@@ -14,6 +14,7 @@ import org.apache.shiro.web.servlet.SimpleCookie;
 import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
+import org.crazycake.shiro.RedisSessionDAO;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -154,7 +155,7 @@ public class ShiroConfig {
     }
 
     /**
-     * Redis 缓存管理器
+     * 整合 shiro-redis 实现 Redis 缓存管理器
      *
      * @return
      */
@@ -162,7 +163,7 @@ public class ShiroConfig {
     public RedisCacheManager redisCacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
-        //redis中针对不同用户缓存
+        //redis中针对不同用户缓存，这个值要唯一，可使用id，作为redis对象的key
         redisCacheManager.setPrincipalIdFieldName("username");
         //用户权限信息缓存时间
         redisCacheManager.setExpire(200000);
@@ -195,22 +196,27 @@ public class ShiroConfig {
     }
 
     /**
-     * 会话管理器
+     * 整合 shiro-redis 实现会话管理器
      *
      * @return
      */
     @Bean
     public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
-        // 关闭会话更新
-        sessionManager.setSessionValidationSchedulerEnabled(false);
-        // 设置 cookie 生效
-        sessionManager.setSessionIdCookieEnabled(true);
-        // 指定 cookie 生成策略
-        sessionManager.setSessionIdCookie(simpleCookie());
-        // 全局 session 超时时间 1h
-        sessionManager.setGlobalSessionTimeout(3600000);
+        sessionManager.setSessionDAO(redisSessionDAO());
         return sessionManager;
+    }
+
+    /**
+     * 整合 shiro-redis 实现 SessionDAO
+     *
+     * @return
+     */
+    @Bean
+    public RedisSessionDAO redisSessionDAO() {
+        RedisSessionDAO redisSessionDAO = new RedisSessionDAO();
+        redisSessionDAO.setRedisManager(redisManager());
+        return redisSessionDAO;
     }
 
     /**
