@@ -1,7 +1,9 @@
 package io.zsy.oss;
 
 import com.qiniu.util.Auth;
+import io.zsy.oss.config.QiNiuKodoProperties;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
@@ -10,6 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
  */
 @SpringBootTest
 public class QiNiuUploadTests {
+
+    @Autowired
+    QiNiuKodoProperties qiNiuKodoProperties;
 
     public String accessKey = "";
     public String secretKey = "";
@@ -22,4 +27,13 @@ public class QiNiuUploadTests {
 
         System.out.println(upToken);
     }
+
+    @Test
+    public void testQiNiuProperties() {
+        System.out.println(qiNiuKodoProperties.getAccessKey());
+        System.out.println(qiNiuKodoProperties.getSecretKey());
+        System.out.println(qiNiuKodoProperties.getBucket());
+        System.out.println(qiNiuKodoProperties.getPath());
+    }
+
 }

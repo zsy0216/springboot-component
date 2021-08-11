@@ -13,13 +13,36 @@
 <body>
 <div id="app">
   <h1 v-text="message"></h1>
+
+  <el-upload
+      class="upload-demo"
+      action="http://localhost:8080/upload"
+      name="file"
+      :on-preview="handlePreview"
+      :on-remove="handleRemove"
+      :file-list="fileList"
+      list-type="picture">
+    <el-button size="small" type="primary">点击上传</el-button>
+    <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
+  </el-upload>
 </div>
 
 <script>
   new Vue({
     el: '#app',
-    data: {
-      message: 'Hello Vue!'
+    data() {
+      return {
+        message: 'Hello Vue!',
+        fileList: []
+      }
+    },
+    methods: {
+      handleRemove(file, fileList) {
+        console.log(file, fileList);
+      },
+      handlePreview(file) {
+        console.log(file);
+      }
     }
   })
 </script>

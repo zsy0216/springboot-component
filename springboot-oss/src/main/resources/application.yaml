@@ -4,8 +4,10 @@ spring:
 
 #七牛云配置
 qiniu:
-  AccessKey:
-  SecretKey:
-  # 七牛空间名
-  Bucket: boot-oss
-  BucketUrl:
+  kodo:
+    accessKey:
+    secretKey:
+    # 七牛空间名
+    bucket: boot-oss
+    # 外链访问CDN域名
+    path:
