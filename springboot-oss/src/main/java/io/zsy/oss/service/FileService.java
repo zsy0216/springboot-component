@@ -23,6 +23,13 @@ public interface FileService {
     String upload(MultipartFile multipartFile);
 
     /**
+     * 从对象存储服务中删除指定文件
+     *
+     * @param fileName 文件名 七牛云中指 key
+     */
+    void delete(String fileName);
+
+    /**
      * 生成上传后文件的文件名：时间+原文件名
      *
      * @param multipartFile 要上传的文件

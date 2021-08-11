@@ -3,6 +3,7 @@ package io.zsy.oss.service.impl;
 import com.google.gson.Gson;
 import com.qiniu.common.QiniuException;
 import com.qiniu.http.Response;
+import com.qiniu.storage.BucketManager;
 import com.qiniu.storage.Configuration;
 import com.qiniu.storage.Region;
 import com.qiniu.storage.UploadManager;
@@ -50,7 +51,9 @@ public class QiNiuFileServiceImpl implements FileService {
             DefaultPutRet putRet = new Gson().fromJson(response.bodyString(), DefaultPutRet.class);
 
             // 上传文件的外链地址,通过这个地址可以直接打开图片
-            return qiNiuKodoProperties.getPath() + "/" + putRet.key;
+            String filePath = qiNiuKodoProperties.getPath() + "/" + putRet.key;
+            // TODO 将上传成功的文件添加到数据库中保存, 考虑使用md5值做主键，判断是否上传重复
+            return filePath;
         } catch (QiniuException ex) {
             Response r = ex.response;
             System.err.println(r.toString());
@@ -64,5 +67,31 @@ public class QiNiuFileServiceImpl implements FileService {
             e.printStackTrace();
         }
         return "";
+    }
+
+    @Override
+    public void delete(String key) {
+        // 构造一个带指定 Region 对象的配置类, 华南 - Region.region2(), Region.huanan()
+        Configuration cfg = new Configuration(Region.huanan());
+        // 生成密钥
+        Auth auth = Auth.create(qiNiuKodoProperties.getAccessKey(), qiNiuKodoProperties.getSecretKey());
+        // bucket 管理类
+        BucketManager bucketManager = new BucketManager(auth, cfg);
+        try {
+            /*
+             * bucketManager.deleteAfterDays(qiNiuKodoProperties.getBucket(), key, days);
+             *      1. bucket
+             *      2. key：存储到qiniu kodo 中的文件名
+             *      3. 过期天数，指定几天后删除该文件
+             */
+            Response response = bucketManager.delete(qiNiuKodoProperties.getBucket(), key);
+            log.info("删除后的响应信息：{}", response);
+            // TODO 删除文件同时从数据库中删除
+        } catch (QiniuException ex) {
+            //如果遇到异常，说明删除失败
+            System.err.println(ex.code());
+            System.err.println(ex.response.toString());
+        }
+
     }
 }

@@ -31,4 +31,11 @@ public class IndexController {
     public String upload(@RequestParam("file") MultipartFile file) {
         return qiNiuFileServiceImpl.upload(file);
     }
+
+    @ResponseBody
+    @PostMapping("/remove")
+    public String remove(String file) {
+        qiNiuFileServiceImpl.delete(file);
+        return "删除成功";
+    }
 }
