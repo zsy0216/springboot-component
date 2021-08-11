@@ -11,3 +11,11 @@ qiniu:
     bucket: boot-oss
     # 外链访问CDN域名
     path:
+aliyun:
+  oss:
+    accessKeyId:
+    accessKeySecret:
+    bucketName: springboot-component
+    endpoint: oss-cn-shenzhen.aliyuncs.com
+    domain: ${aliyun.oss.bucketName}.${aliyun.oss.endpoint}
+
