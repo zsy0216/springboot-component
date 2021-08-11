@@ -118,6 +118,11 @@
     </dependencyManagement>
     <!--  公共依赖，使每个模块只需要关注特定业务所需要的依赖  -->
     <dependencies>
+        <!-- web 支持 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>

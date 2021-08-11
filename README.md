@@ -6,7 +6,7 @@
 
 ## 父模块说明
 
-1. 该工程基于 springboot 开发，父模块默认依赖 spring-boot-starter-test、Lombok；
+1. 该工程基于 springboot 开发，父模块默认依赖 spring-boot-starter-web spring-boot-starter-test、Lombok；
 
 2. 父模块做版本的统一管理；
 
