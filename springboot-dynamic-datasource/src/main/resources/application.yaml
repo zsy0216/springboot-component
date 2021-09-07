@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    ds1:
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:mysql:///test?useUnicode=true&useSSL=false
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    ds2:
+      type: com.alibaba.druid.pool.DruidDataSource
+      url: jdbc:mysql:///test2?useUnicode=true&useSSL=false
+      username: root
+      password: root
+      driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  type-aliases-package: io.zsy.dynamic.model
+  mapper-locations:
+    - classpath:/mapper/ds1/*.xml
+    - classpath:/mapper/ds2/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

@@ -32,6 +32,7 @@
         <module>springboot-websocket</module>
         <module>springboot-mongodb</module>
         <module>springboot-oss</module>
+        <module>springboot-dynamic-datasource</module>
     </modules>
 
     <!-- 统一管理jar包版本 -->
