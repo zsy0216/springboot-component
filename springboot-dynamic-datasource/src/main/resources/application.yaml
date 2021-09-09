@@ -1,12 +1,12 @@
 spring:
   datasource:
-    ds1:
+    test:
       type: com.alibaba.druid.pool.DruidDataSource
       url: jdbc:mysql:///test?useUnicode=true&useSSL=false
       username: root
       password: root
       driver-class-name: com.mysql.cj.jdbc.Driver
-    ds2:
+    demo:
       type: com.alibaba.druid.pool.DruidDataSource
       url: jdbc:mysql:///test2?useUnicode=true&useSSL=false
       username: root
