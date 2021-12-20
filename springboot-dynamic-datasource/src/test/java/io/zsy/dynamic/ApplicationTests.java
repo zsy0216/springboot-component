@@ -1,8 +1,7 @@
 package io.zsy.dynamic;
 
-import io.zsy.dynamic.mapper.ds1.TestMapper;
+import io.zsy.dynamic.mapper.test.TestMapper;
 import io.zsy.dynamic.mapper.ds2.DemoMapper;
-import io.zsy.dynamic.model.ds2.Demo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,12 +20,12 @@ public class ApplicationTests {
     DemoMapper demoMapper;
 
     @Test
-    public void testDynamicDataSource() {
-        System.out.println(testMapper.selectByPrimaryKey(1));
-        Demo demo = new Demo();
-        demo.setId(3);
-        demo.setName("wangwu");
-        demoMapper.insert(demo);
+    public void demoDataSource() {
+        System.out.println(demoMapper.selectByPrimaryKey(1));
     }
 
+    @Test
+    public void testDataSource(){
+        System.out.println(testMapper.selectByPrimaryKey(1));
+    }
 }

@@ -1,7 +1,9 @@
-package io.zsy.dynamic.mapper.ds1;
+package io.zsy.dynamic.mapper.test;
 
 import io.zsy.dynamic.model.ds1.Test;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface TestMapper {
     int deleteByPrimaryKey(Integer id);
 
