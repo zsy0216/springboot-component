@@ -32,6 +32,7 @@
         <module>springboot-websocket</module>
         <module>springboot-mongodb</module>
         <module>springboot-oss</module>
+        <module>springboot-param</module>
         <module>springboot-dynamic-datasource</module>
         <module>springboot-logger</module>
     </modules>
